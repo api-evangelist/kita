@@ -1,0 +1,62 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/kita-capture-openapi.yml, openapi/kita-underwriter-openapi.yml
+docs: https://www.kita.ai/documentation
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+  model: organization-scoped API keys
+  oauth2: false
+  openid_connect: false
+  notes: 'Kita uses long-lived organization API keys, not OAuth. Each product issues its own
+    key with its own prefix. The Underwriter key carries coarse read/write scopes enforced
+    per endpoint; those are key scopes, not OAuth scopes, so there is no authorization
+    server, no token endpoint and no scopes/ artifact for this provider. Enterprise plans
+    additionally offer SSO/SAML for dashboard sign-in (not for API calls).'
+schemes:
+- name: BearerAuth
+  api: Kita Capture API
+  type: http
+  scheme: bearer
+  key_prefix: kita_prod_
+  header: 'Authorization: Bearer [example key]'
+  issued_from: https://portal.usekita.com
+  env_var: KITA_API_KEY
+  description: Organization API key for the Kita Capture document-intelligence API, issued
+    from the Kita dashboard.
+  sources:
+  - openapi/kita-capture-openapi.yml
+- name: ApiKeyAuth
+  api: Kita AI Underwriter API
+  type: http
+  scheme: bearer
+  key_prefix: kita_uw_
+  accepted_headers:
+  - 'Authorization: ApiKey kita_uw_...'
+  - 'Authorization: Bearer [example key]'
+  issued_from: Settings → API keys (organization admin)
+  env_var: KITA_UNDERWRITER_API_KEY
+  description: Organization API key for the Kita AI Underwriter API. Displayed once at
+    creation; Kita stores only a SHA-256 hash, so a lost key cannot be recovered and must be
+    revoked and re-minted.
+  key_scopes:
+  - scope: read
+    grants: GET endpoints — list and read applications, credit picture, memo, documents,
+      conversation, transcripts and exports.
+  - scope: write
+    grants: Mutations — intake, create/update/delete applications, upload documents,
+      generate memo.
+  scope_enforcement: A valid key without the required scope receives HTTP 403.
+  sources:
+  - openapi/kita-underwriter-openapi.yml
+rotation:
+  revocable: true
+  hashed_at_rest: true
+  hash: SHA-256
+  recovery: none — a compromised key must be revoked and regenerated
+handling:
+  server_side_only: true
+  notes: Kita documents that keys must stay out of browsers and public repositories; the
+    official MCP server takes the key via server-side environment variables.
