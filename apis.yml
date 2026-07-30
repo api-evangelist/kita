@@ -1,22 +1,368 @@
 aid: kita
 name: Kita
-description: Kita is a company surfaced as a portfolio company of y-combinator and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: 'Kita is an AI-native loan origination and underwriting company (Y Combinator
+  W26, San Francisco) building document intelligence and credit decisioning for lenders in
+  emerging and undertapped markets. Kita ships two developer-facing APIs. Kita Capture is a
+  document-intelligence API that turns scanned or photographed bank statements, payslips,
+  government IDs, credit reports, tax filings and 30+ other document types into structured,
+  validated, fraud-checked JSON, with cross-document verification, batch processing, custom
+  extraction schemas and HMAC-signed webhooks. Kita Underwriter is a credit-file API that
+  creates loan applications, ingests borrower documents, computes a deterministic credit
+  picture (adjusted EBITDA, DSCR, margins, debt-to-worth, sensitivity and a policy-engine
+  decision produced by a versioned calculation engine rather than an LLM) and synthesizes a
+  cited credit memo. The platform is region-pinned across Singapore and Mexico deployments
+  and is used by microfinance institutions, SME lenders, CDFIs and community banks across
+  Southeast Asia, Latin America and the United States.'
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.kita.ai/kita_logo_green.png
 url: https://raw.githubusercontent.com/api-evangelist/kita/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profile
+x-tier-reason: enriched-from-published-docs
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Fintech
+- Lending
+- Underwriting
+- Credit Scoring
+- Document Intelligence
+- Document Extraction
+- Fraud Detection
+- Artificial Intelligence
+- Computer Vision
+- Emerging Markets
+- Loan Origination
+apis:
+- aid: kita:kita-applications-api
+  name: Kita Applications API
+  description: Loan application records.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-applications-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-batch-api
+  name: Kita Batch API
+  description: Process up to 100 documents from URLs in one request.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Batch
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-batch-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-conversation-api
+  name: Kita Conversation API
+  description: Borrower message thread.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Conversation
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-conversation-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-credit-api
+  name: Kita Credit API
+  description: Deterministic credit picture — spread, adjustments, policy decision.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Credit
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-credit-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-documents-api
+  name: Kita Documents API
+  description: Borrower document upload and extraction.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-documents-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-exports-api
+  name: Kita Exports API
+  description: PDF and XLSX exports.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Exports
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-exports-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-folders-api
+  name: Kita Folders API
+  description: Group documents into containers.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Folders
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-folders-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-memo-api
+  name: Kita Memo API
+  description: Cited credit memo synthesis and retrieval.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Memo
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-memo-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-processing-api
+  name: Kita Processing API
+  description: Submit documents for extraction.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Processing
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-processing-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-results-api
+  name: Kita Results API
+  description: Retrieve extraction results, summaries and exports.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Results
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-results-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-schemas-api
+  name: Kita Schemas API
+  description: Custom extraction schemas.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Schemas
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-schemas-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-transcripts-api
+  name: Kita Transcripts API
+  description: Plain-text document transcripts.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Transcripts
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-transcripts-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-verification-api
+  name: Kita Verification API
+  description: Cross-document verification checks.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-verification-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+- aid: kita:kita-webhooks-api
+  name: Kita Webhooks API
+  description: Register and manage HMAC-signed outbound webhooks.
+  humanURL: https://www.kita.ai/capture
+  baseURL: https://portal.usekita.com
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/kita-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://www.kita.ai/documentation
+  - type: Webhooks
+    url: asyncapi/kita-capture-webhooks.yml
+  - type: APIReference
+    url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/kita/overview
+- type: DeveloperPortal
+  url: https://www.kita.ai/documentation
+- type: Documentation
+  url: https://www.kita.ai/documentation
+- type: APIReference
+  url: https://www.kita.ai/documentation
+- type: GettingStarted
+  url: https://www.kita.ai/documentation
+- type: Website
+  url: https://www.kita.ai/
+- type: Blog
+  url: https://www.kita.ai/blog
+- type: Support
+  url: mailto:support@kita.ai
+- type: SignUp
+  url: https://portal.usekita.com/
+- type: Login
+  url: https://portal.usekita.com/
+- type: Pricing
+  url: https://www.kita.ai/pricing
+- type: TermsOfService
+  url: https://www.kita.ai/terms
+- type: PrivacyPolicy
+  url: https://www.kita.ai/privacy
+- type: GitHubOrganization
+  url: https://github.com/Kita-Technologies
+- type: SourceCode
+  url: https://github.com/Kita-Technologies/kita-api-examples
+- type: Security
+  url: https://www.kita.ai/security
+- type: Compliance
+  url: https://www.kita.ai/security
+- type: Sandbox
+  url: sandbox/kita-sandbox.yml
+- type: Console
+  url: https://demo.kita.ai/
+- type: Packages
+  url: packages/kita-packages.yml
+- type: SDKs
+  url: packages/kita-packages.yml
+- type: MCPServer
+  url: mcp/kita-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/kita-llms.txt
+- type: WellKnown
+  url: well-known/kita-well-known.yml
+- type: Authentication
+  url: authentication/kita-authentication.yml
+- type: Conventions
+  url: conventions/kita-conventions.yml
+- type: Idempotency
+  url: conventions/kita-conventions.yml
+- type: RateLimits
+  url: rate-limits/kita-rate-limits.yml
+- type: Plans
+  url: plans/kita-plans.yml
+- type: ErrorCatalog
+  url: errors/kita-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/kita-lifecycle.yml
+- type: Conformance
+  url: conformance/kita-conformance.yml
+- type: DataModel
+  url: data-model/kita-data-model.yml
+- type: Examples
+  url: examples/kita-examples.yml
+- type: Webhooks
+  url: asyncapi/kita-capture-webhooks.yml
+- type: DomainSecurity
+  url: security/kita-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/kita-vulnerability-disclosure.yml
+- type: TrustCenter
+  url: security/kita-trust-center.yml
+- type: AgenticAccess
+  url: agentic-access/kita-agentic-access.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
