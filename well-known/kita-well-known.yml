@@ -1,0 +1,53 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of the Kita website and API hosts
+result: none — Kita publishes no /.well-known/ discovery documents on any probed host
+hosts:
+- host: https://www.kita.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://underwriter.kita.ai
+  note: 'This host is a Next.js application with a catch-all route: every unknown path returns
+    HTTP 200 with the application HTML shell (content-type text/html), not the requested
+    document. All probes below are soft 404s — no well-known document is actually served.'
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    soft_404: true
+    content_type: text/html
+  - path: /.well-known/openid-configuration
+    status: 200
+    soft_404: true
+    content_type: text/html
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    soft_404: true
+    content_type: text/html
+  - path: /.well-known/api-catalog
+    status: 200
+    soft_404: true
+    content_type: text/html
+  - path: /llms.txt
+    status: 200
+    soft_404: true
+    content_type: text/html
+  - path: /openapi.json
+    status: 200
+    soft_404: true
+    content_type: text/html
+- host: https://portal.usekita.com
+  documents:
+  - path: /llms.txt
+    status: 404
+files: []

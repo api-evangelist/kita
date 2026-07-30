@@ -1,0 +1,40 @@
+{
+  "provider": "kita",
+  "sources": [
+    "kita-applications-api-openapi.yml",
+    "kita-batch-api-openapi.yml",
+    "kita-conversation-api-openapi.yml",
+    "kita-credit-api-openapi.yml",
+    "kita-documents-api-openapi.yml",
+    "kita-exports-api-openapi.yml",
+    "kita-folders-api-openapi.yml",
+    "kita-memo-api-openapi.yml",
+    "kita-processing-api-openapi.yml",
+    "kita-results-api-openapi.yml",
+    "kita-schemas-api-openapi.yml",
+    "kita-transcripts-api-openapi.yml",
+    "kita-verification-api-openapi.yml",
+    "kita-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "kita-applications-api-openapi.yml",
+    "kita-batch-api-openapi.yml",
+    "kita-conversation-api-openapi.yml",
+    "kita-credit-api-openapi.yml",
+    "kita-documents-api-openapi.yml",
+    "kita-exports-api-openapi.yml",
+    "kita-folders-api-openapi.yml",
+    "kita-memo-api-openapi.yml",
+    "kita-processing-api-openapi.yml",
+    "kita-results-api-openapi.yml",
+    "kita-schemas-api-openapi.yml",
+    "kita-transcripts-api-openapi.yml",
+    "kita-verification-api-openapi.yml",
+    "kita-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

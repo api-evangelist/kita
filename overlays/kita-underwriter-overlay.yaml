@@ -1,0 +1,83 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Kita AI Underwriter API
+  version: 1.0.0
+extends: openapi/kita-underwriter-openapi.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: API Evangelist enrichment pipeline
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-19'
+    x-apievangelist-provenance: 'Generated from Kita''s published documentation and the
+      official API.md in Kita-Technologies/kita-api-examples; Kita publishes no
+      machine-readable OpenAPI description.'
+    x-apis-json: https://raw.githubusercontent.com/api-evangelist/kita/refs/heads/main/apis.yml
+    x-authentication: authentication/kita-authentication.yml
+    x-conventions: conventions/kita-conventions.yml
+    x-error-catalog: errors/kita-problem-types.yml
+    x-data-model: data-model/kita-data-model.yml
+    x-lifecycle: lifecycle/kita-lifecycle.yml
+- target: $.info
+  update:
+    x-idempotency:
+      supported: true
+      mechanism: client-supplied business key
+      field: external_ref
+      location: request body
+      operations: [intakeApplication]
+      header: none
+      replay_response: 'HTTP 200 with "idempotent": true'
+- target: $.info
+  update:
+    x-async-model:
+      pattern: submit-then-poll
+      webhooks: false
+      document_poll: 'GET /applications/{id}/documents until status leaves awaiting/processing'
+      memo_poll: 'GET /applications/{id}/memo/status until synthesis_in_progress is false and
+        is_stale is false'
+      backoff: start at 2–3 seconds, exponential
+- target: $.paths['/intake'].post
+  update:
+    x-idempotent: true
+    x-idempotency-field: external_ref
+    x-agentic-consequence: write
+    x-partial-failure: 'HTTP 502 means the application was created but document upload failed —
+      do not re-run blind; replay with the same external_ref or upload documents separately.'
+- target: $.paths['/applications/{id}'].delete
+  update:
+    x-agentic-consequence: safety-critical
+    x-irreversible: true
+    x-note: Permanently deletes the application, its documents and storage, and the borrower
+      record if orphaned. There is no undo and no test mode.
+- target: $.paths['/applications/{id}/documents/{docId}'].delete
+  update:
+    x-agentic-consequence: write
+    x-irreversible: true
+    x-side-effect: Recomputes file completeness on the parent application.
+- target: $.paths['/applications/{id}/credit'].get
+  update:
+    x-deterministic: true
+    x-note: 'Spread, ratios and the policy decision come from a versioned calculation engine,
+      never from an LLM. Every value cites the document line it came from. Layers are null
+      until computed — a null layer means not-yet-computed, not zero.'
+- target: $.paths['/applications/{id}/memo'].post
+  update:
+    x-long-running: true
+    x-inline-timeout-seconds: 120
+    x-note: Redrafting overwrites the prior draft. Sections locked by a loan officer are
+      flagged locked_by_lo.
+- target: $.paths['/applications/{id}'].patch
+  update:
+    x-agentic-consequence: write
+    x-note: 'Setting status to approved or declined records a lender credit decision. Treat as
+      a human-in-the-loop action; Kita''s policy engine defaults routing to human review.'
+- target: $.components.securitySchemes.ApiKeyAuth
+  update:
+    x-key-prefix: kita_uw_
+    x-env-var: KITA_UNDERWRITER_API_KEY
+    x-key-scopes: [read, write]
+    x-shown-once: true
+    x-hash-at-rest: SHA-256
+    x-server-side-only: true

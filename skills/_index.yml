@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: generated
+source: 'openapi/kita-capture-openapi.yml, openapi/kita-underwriter-openapi.yml,
+  https://www.kita.ai/documentation'
+note: 'Kita publishes no AGENTS.md or provider-authored skill files. These skills were
+  generated from Kita''s published documentation and the OpenAPI descriptions in this
+  repository; every operationId referenced is verified against those specs.'
+skills:
+- file: kita-underwrite-a-loan-file.md
+  name: Underwrite a loan file with Kita
+  description: Create a loan application, push borrower documents, wait for extraction, read
+    the deterministic credit picture, and generate a cited credit memo.
+  api: openapi/kita-underwriter-openapi.yml
+  operations: [intakeApplication, getApplication, listDocuments, getDocument, getCreditPicture,
+    synthesizeMemo, getMemoStatus, getMemo]
+- file: kita-extract-document-data.md
+  name: Extract structured data from a document with Kita Capture
+  description: Submit a bank statement, payslip, ID, credit report or other financial document
+    and retrieve structured, validated, fraud-checked JSON.
+  api: openapi/kita-capture-openapi.yml
+  operations: [processDocumentAsync, getDocumentResult, getDocumentSummary, listDocuments,
+    exportDocument, customExportDocument, getDocumentJob]
+- file: kita-verify-applicant-documents.md
+  name: Cross-verify an applicant's documents with Kita
+  description: Run cross-document verification over an applicant's already-processed documents
+    and wire HMAC-signed webhooks so results arrive without polling.
+  api: openapi/kita-capture-openapi.yml
+  operations: [processDocumentAsync, getDocumentResult, verifyDocuments, verifySingleDocument,
+    createWebhook, testWebhook, listWebhookDeliveries]

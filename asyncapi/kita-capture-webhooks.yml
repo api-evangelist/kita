@@ -1,0 +1,100 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.kita.ai/documentation
+spec_type: Webhooks
+asyncapi_published: false
+note: 'Kita publishes no AsyncAPI document. The Kita Capture API ships a real, fully managed
+  outbound webhook surface — registration, secret rotation, delivery history, dead-letter
+  queue and HMAC signing — so the event surface is captured here as a webhook catalog rather
+  than fabricated as an AsyncAPI spec. The Kita AI Underwriter API explicitly does not support
+  webhooks; polling is its documented pattern.'
+apis:
+- api: Kita Capture API
+  webhooks: supported
+  base_url: https://portal.usekita.com
+- api: Kita AI Underwriter API
+  webhooks: not supported
+  alternative: polling with exponential backoff
+delivery:
+  direction: outbound
+  transport: HTTPS POST
+  payload: JSON
+  signing:
+    algorithm: HMAC-SHA256
+    over: the raw request body
+    key: the webhook's signing secret
+    header: X-Kita-Signature
+    timestamp_field: 't='
+    replay_tolerance: 5 minutes (default)
+    verification_guidance: 'Verify both the signature and the t= timestamp tolerance window to
+      defend against replays.'
+  retries:
+    enabled: true
+    dead_letter_queue: true
+    note: Deliveries that fail every retry land in the dead-letter queue.
+subscription_modes:
+- mode: registered endpoint
+  description: A persistent endpoint registered via POST /api/v1/webhooks with a set of
+    subscribed events and an active flag.
+- mode: one-shot
+  description: A per-request webhook_url passed on POST /api/process-async or POST /api/v1/batch,
+    delivering the result of that single job.
+events:
+  published_catalog: false
+  note: 'Kita documents that a delivery fires "when a job finishes (or other events fire)" and
+    that webhooks carry a configurable events list, but does not publish the enumerated event
+    names. The event enum is therefore not captured here rather than invented.'
+  known_trigger: document or batch processing job completion
+management_operations:
+- method: POST
+  path: /api/v1/webhooks
+  description: Register a webhook endpoint.
+  operation: openapi/kita-capture-openapi.yml#createWebhook
+- method: GET
+  path: /api/v1/webhooks
+  description: List registered webhooks.
+  operation: openapi/kita-capture-openapi.yml#listWebhooks
+- method: GET
+  path: /api/v1/webhooks/{id}
+  description: Get a single webhook.
+  operation: openapi/kita-capture-openapi.yml#getWebhook
+- method: PATCH
+  path: /api/v1/webhooks/{id}
+  description: Update URL, events, or active flag.
+  operation: openapi/kita-capture-openapi.yml#updateWebhook
+- method: DELETE
+  path: /api/v1/webhooks/{id}
+  description: Delete a webhook.
+  operation: openapi/kita-capture-openapi.yml#deleteWebhook
+- method: POST
+  path: /api/v1/webhooks/{id}/test
+  description: Send a test delivery.
+  operation: openapi/kita-capture-openapi.yml#testWebhook
+- method: POST
+  path: /api/v1/webhooks/{id}/rotate-secret
+  description: Rotate the signing secret.
+  operation: openapi/kita-capture-openapi.yml#rotateWebhookSecret
+- method: GET
+  path: /api/v1/webhooks/{id}/secret
+  description: Retrieve the current signing secret.
+  operation: openapi/kita-capture-openapi.yml#getWebhookSecret
+- method: GET
+  path: /api/v1/webhooks/{id}/deliveries
+  description: Delivery history — status, attempts, latency.
+  operation: openapi/kita-capture-openapi.yml#listWebhookDeliveries
+- method: GET
+  path: /api/v1/webhooks/stats
+  description: Delivery aggregates.
+  operation: openapi/kita-capture-openapi.yml#getWebhookStats
+- method: GET
+  path: /api/v1/webhooks/dlq
+  description: Dead-letter queue — deliveries that failed every retry.
+  operation: openapi/kita-capture-openapi.yml#getWebhookDeadLetterQueue
+- method: POST
+  path: /api/v1/webhooks/validate-url
+  description: Pre-flight check a candidate endpoint URL.
+  operation: openapi/kita-capture-openapi.yml#validateWebhookUrl
+- method: POST
+  path: /api/v1/webhooks/verify-signature
+  description: Helper to verify a sample payload signature.
+  operation: openapi/kita-capture-openapi.yml#verifyWebhookSignature

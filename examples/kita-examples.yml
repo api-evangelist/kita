@@ -1,0 +1,75 @@
+generated: '2026-07-19'
+method: searched
+source: 'https://github.com/Kita-Technologies/kita-api-examples, https://www.kita.ai/documentation'
+summary: 'Kita ships a public examples repository for the AI Underwriter API and inlines
+  request/response examples for every Capture document type in its documentation. Response
+  examples harvested from the docs are embedded in openapi/kita-capture-openapi.yml.'
+repositories:
+- name: kita-api-examples
+  url: https://github.com/Kita-Technologies/kita-api-examples
+  api: Kita AI Underwriter API
+  description: End-to-end examples for the Kita AI Underwriter API.
+  created: '2026-06-26'
+  reference_doc: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
+  files:
+  - path: examples/curl/quickstart.sh
+    language: bash
+    description: Core workflow via curl — create application, upload documents, generate memo.
+  - path: examples/python/01_quickstart.py
+    language: python
+    description: Create an application, upload documents, poll, generate the cited memo.
+  - path: examples/python/02_exports.py
+    language: python
+    description: Download the memo PDF and the financial spread / extraction workbooks.
+  - path: examples/python/03_transcripts.py
+    language: python
+    description: Retrieve plain-text document transcripts.
+  - path: examples/python/04_intake_one_call.py
+    language: python
+    description: One-call idempotent intake using external_ref.
+  - path: examples/python/kita_client.py
+    language: python
+    description: Reusable minimal REST client — no SDK dependency.
+  - path: examples/python/requirements.txt
+    language: python
+  install: pip install -r requirements.txt
+  auth_env: KITA_API_KEY=kita_uw_...
+  base_url: https://underwriter.kita.ai/api/v1
+documented_language_examples:
+  api: Kita Capture API
+  note: 'Kita''s documentation lists example programs for these languages. They are referenced
+    by relative path from the docs bundle and are not currently published in the public
+    Kita-Technologies GitHub organization.'
+  languages:
+  - language: curl
+    path: examples/curl/examples.sh
+  - language: javascript
+    path: examples/javascript/kita_example.js
+    runtime: Node.js 18+
+  - language: php
+    path: examples/php/kita_example.php
+    runtime: PHP 7.4+
+  - language: java
+    path: examples/java/KitaExample.java
+    runtime: Java 11+
+  - language: csharp
+    path: examples/csharp/KitaExample.cs
+    runtime: .NET 6+
+inline_response_examples:
+  api: Kita Capture API
+  source: https://www.kita.ai/documentation
+  captured_in: openapi/kita-capture-openapi.yml
+  document_types_with_worked_examples:
+  - bank_statement
+  - payslip
+  - bill
+  - credit_report
+  - sales_invoice
+  - other_document
+postman:
+  referenced: true
+  path: postman/kita_api.postman_collection.json
+  public_url: null
+  note: 'The documentation points at a Postman collection by relative path inside Kita''s own
+    docs bundle. No public Postman workspace or shared collection URL was found, so no
+    Postman pointer is wired into apis.yml.'

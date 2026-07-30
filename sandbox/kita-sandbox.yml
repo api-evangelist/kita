@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: searched
+source: 'https://demo.kita.ai/, https://www.kita.ai/pricing, https://www.kita.ai/documentation'
+summary: 'Kita publishes a hosted guided demo of the lending workflow and a free tier that
+  doubles as the trial path, but it does NOT publish a separate test mode, test API keys, or
+  magic test values. There is no test/live key-prefix split — the documented Capture prefix
+  kita_prod_ and Underwriter prefix kita_uw_ are the only prefixes Kita publishes.'
+hosted_demo:
+  url: https://demo.kita.ai/
+  name: Kita Guided Demo
+  auth_required: false
+  description: 'A browser-based guided walkthrough of the lending workflow, pre-seeded with
+    synthetic applications (identifiers prefixed DEMO-) showing borrower records, loan sizes,
+    document collection progress, status and portfolio insights. It exercises the product
+    surface, not the REST API.'
+  note: Synthetic borrower records shown in the demo are Kita's own display fixtures and are
+    not documented as API test data.
+free_tier_as_trial:
+  available: true
+  plan: Standard
+  included: first 100 credits
+  detail: 'Kita''s documented path to trying the API is the free Standard plan against
+    production, using a real kita_prod_ key issued from the dashboard.'
+  sign_up: https://portal.usekita.com/
+test_mode:
+  separate_test_environment: false
+  test_key_prefix: none published
+  live_key_prefix:
+    capture: kita_prod_
+    underwriter: kita_uw_
+  test_clocks: not supported
+  fixtures_or_triggers: none published
+  sample_documents: none published
+base_url_override:
+  supported: true
+  note: 'Both APIs accept a base-URL override intended for staging or self-hosted Kita
+    instances, which implies non-production deployments exist for enterprise customers even
+    though no public sandbox host is documented.'
+  env_vars:
+  - name: KITA_API_URL
+    api: Kita Capture API
+    default: https://portal.usekita.com
+  - name: KITA_API_BASE
+    api: Kita Capture API (MCP server)
+    default: https://api.usekita.com
+  - name: KITA_UNDERWRITER_API_BASE
+    api: Kita AI Underwriter API
+    default: https://underwriter.kita.ai/api/v1
+non_destructive_probes:
+  note: 'Safe operations for verifying credentials and connectivity without creating billable
+    work.'
+  operations:
+  - openapi/kita-capture-openapi.yml#listDocuments
+  - openapi/kita-capture-openapi.yml#listWebhooks
+  - openapi/kita-capture-openapi.yml#validateWebhookUrl
+  - openapi/kita-capture-openapi.yml#testWebhook
+  - openapi/kita-underwriter-openapi.yml#listApplications
+caveat: 'Because there is no test mode, every API call in the Standard tier consumes real
+  credits and, on the Underwriter API, creates real application records. Use external_ref on
+  intake so retries during development are idempotent rather than duplicating applications.'

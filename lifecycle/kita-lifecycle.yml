@@ -1,0 +1,67 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.kita.ai/documentation
+versioning:
+  scheme: uri-path
+  apis:
+  - api: Kita AI Underwriter API
+    current: v1
+    base: https://underwriter.kita.ai/api/v1
+    override_env: KITA_UNDERWRITER_API_BASE
+  - api: Kita Capture API
+    current: v1
+    base: https://portal.usekita.com
+    note: 'Mixed prefixes — newer surfaces (documents, batch, verify, webhooks, folders,
+      schemas) are under /api/v1/ while the original process and results endpoints remain at
+      /api/.'
+    override_env: KITA_API_URL
+  policy: 'Version is pinned in the path. Kita states that breaking changes ship as new
+    versions.'
+deprecation:
+  policy_url: https://www.kita.ai/documentation
+  policy_summary: 'Breaking changes ship as a new path version rather than mutating v1. Kita
+    documents at least one retired identifier: the legacy "afs" shorthand for the
+    audited_financial_statement document type is no longer accepted and callers must use the
+    full slug.'
+  sunset_header: not documented
+  deprecation_header: not documented
+  rfc8594: false
+  retired:
+  - identifier: afs
+    replaced_by: audited_financial_statement
+    api: Kita Capture API
+    note: The older shorthand is no longer accepted at upload time.
+deprecated_operations: []
+sla:
+  published: false
+  note: 'No public SLA or uptime target. Kita publishes support tiers by plan — email support
+    on Standard, priority support on Growth, and a dedicated engineer with response times in
+    minutes on Enterprise.'
+status_page:
+  published: false
+  note: 'No public status page was found. status.kita.ai resolves but serves the Kita Credit
+    Officer sign-in application, not an availability dashboard.'
+changelog:
+  published: false
+  note: 'No public dated changelog. The Python SDK ships a CHANGELOG.md in its source
+    repository (github.com/usekita/kita-python-sdk), but that repository is not publicly
+    readable.'
+maturity:
+  company_founded: 2025
+  accelerator: Y Combinator W26
+  stage: early
+  note: 'Kita is an early-stage company; API surfaces are still expanding. The Underwriter API
+    documents webhooks as not yet supported while the Capture API already ships a full
+    webhook management surface.'
+regions:
+  model: region-pinned per organization, identical request and response shapes across regions
+  deployments:
+  - id: ap-southeast-1
+    location: Singapore
+    default_for: all organizations unless flagged for MX residency
+  - id: mx-central-1
+    location: Mexico
+    default_for: Mexican-residency customers (regulated)
+cross_links:
+  conventions: conventions/kita-conventions.yml
+  security: security/kita-trust-center.yml

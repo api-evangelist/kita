@@ -1,0 +1,188 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kita-underwriter-openapi.yml, openapi/kita-capture-openapi.yml
+also_searched: https://www.kita.ai/documentation
+summary: 'Two loosely-coupled domains. The Underwriter domain is rooted on Application — a
+  loan file that owns documents, a credit picture, a memo and a borrower conversation. The
+  Capture domain is rooted on Document — a single processed file that may belong to a batch or
+  a folder and may be extracted through a custom schema. The two are related conceptually
+  (Capture is the extraction engine beneath Underwriter) but expose separate identifiers and
+  hosts, and no cross-domain identifier is documented.'
+domains:
+- name: underwriter
+  base_url: https://underwriter.kita.ai/api/v1
+- name: capture
+  base_url: https://portal.usekita.com
+entities:
+- name: Application
+  domain: underwriter
+  description: A loan application / credit file.
+  identifier:
+    primary: id (UUID)
+    alternate: app_id (human, e.g. APP-1234) — both are accepted in the path
+    client_key: external_ref (caller's own loan or record ID; drives idempotent intake)
+  status_field: status
+  states: [submitted, awaiting_docs, underwriting, question_raised, memo_drafted, approved, declined]
+  fields: [business_name, borrower_email, borrower_phone, loan_type, loan_amount,
+    application_context, send_outreach, file_completeness, document_count]
+  operations: [intakeApplication, createApplication, listApplications, getApplication,
+    updateApplication, deleteApplication]
+- name: Document
+  domain: underwriter
+  description: A borrower document attached to an application and run through extraction.
+  identifier:
+    primary: docId
+  status_field: status
+  states: [awaiting, processing, verified, low_confidence, missing]
+  fields: [kita_raw, recommendations, inconsistencies, download_url]
+  operations: [uploadDocuments, listDocuments, getDocument, deleteDocument]
+- name: CreditPicture
+  domain: underwriter
+  description: The deterministic assessment computed by a versioned calculation engine. Three
+    layers, each null until computed.
+  identifier:
+    primary: none — singleton per application
+  layers:
+  - name: spread
+    description: Adjusted EBITDA and net income, DSCR, margins, debt-to-worth, current ratio,
+      reserve months, LTV, a sensitivity table and per-metric provenance.
+  - name: adjustments
+    description: Normalization line items such as owner-comp add-backs and non-recurring
+      items, each tagged ai or lo.
+  - name: decision
+    description: Policy-engine routing recommendation, auto-route flag, and per-rule pass/fail
+      with observed vs expected.
+  operations: [getCreditPicture]
+- name: Memo
+  domain: underwriter
+  description: The cited credit memo, synthesized from documents and conversation.
+  identifier:
+    primary: none — singleton per application
+  fields: [last_synthesis_at, sections]
+  child_shape:
+    name: MemoSection
+    fields: [section_number, title, body, locked_by_lo, updated_at]
+  freshness_fields: [synthesis_in_progress, is_stale, stale_reasons, new_doc_count,
+    new_message_count, last_run_status, last_synthesis_at]
+  operations: [synthesizeMemo, getMemo, getMemoStatus]
+- name: ConversationMessage
+  domain: underwriter
+  description: A message in the borrower thread.
+  ordering_field: display_order
+  operations: [getConversation]
+- name: Transcript
+  domain: underwriter
+  description: Plain-text transcript of a document's pages.
+  fields: [pages, block_count, char_count, has_text, text]
+  operations: [getDocumentTranscript, listApplicationTranscripts]
+- name: CaptureDocument
+  domain: capture
+  description: A single file submitted for extraction.
+  identifier:
+    primary: documentId (integer)
+  status_field: status
+  states: [pending, processing, completed, failed]
+  fields: [document_type, filename, processing_time_seconds, uploaded_at, metadata,
+    extracted_data, fraud_detection, total_cost_usd, cost_report]
+  operations: [processDocumentAsync, getDocumentResult, listDocuments, getDocumentSummary,
+    exportDocument, customExportDocument, getDocumentJob]
+- name: Batch
+  domain: capture
+  description: Up to 100 documents submitted from URLs in one request.
+  identifier:
+    primary: batch_id (string, prefix batch_)
+  fields: [status, total_documents, completed, failed, progress_percent, status_url,
+    total_cost_usd]
+  operations: [createBatch, getBatch, getBatchResults]
+- name: Folder
+  domain: capture
+  description: A container for grouping documents, e.g. by applicant.
+  operations: [createFolder, listFolders, listFolderDocuments]
+- name: ExtractionSchema
+  domain: capture
+  description: An enterprise-defined custom extraction shape that overrides the default
+    vocabulary output.
+  operations: [listSchemas, createSchema, getSchema, updateSchema, deleteSchema]
+- name: Webhook
+  domain: capture
+  description: A registered outbound delivery endpoint with a signing secret.
+  fields: [url, events, active]
+  operations: [createWebhook, listWebhooks, getWebhook, updateWebhook, deleteWebhook,
+    testWebhook, rotateWebhookSecret, getWebhookSecret, listWebhookDeliveries,
+    getWebhookStats, getWebhookDeadLetterQueue]
+- name: VerificationResult
+  domain: capture
+  description: Cross-document verification across 2–50 already-processed documents.
+  fields: [document_count, documents, document_summary, cross_doc_score, signals,
+    field_verifiability, corroboration]
+  operations: [verifyDocuments, verifySingleDocument]
+relationships:
+- from: Application
+  to: Document
+  type: has_many
+  via: path /applications/{id}/documents
+- from: Document
+  to: Application
+  type: belongs_to
+  via: path /applications/{id}/documents/{docId}
+- from: Application
+  to: CreditPicture
+  type: has_one
+  via: path /applications/{id}/credit
+- from: Application
+  to: Memo
+  type: has_one
+  via: path /applications/{id}/memo
+- from: Memo
+  to: MemoSection
+  type: has_many
+  via: sections
+- from: Application
+  to: ConversationMessage
+  type: has_many
+  via: path /applications/{id}/conversation
+- from: Document
+  to: Transcript
+  type: has_one
+  via: path /applications/{id}/documents/{docId}/transcript
+- from: Batch
+  to: CaptureDocument
+  type: has_many
+  via: documents[].document_id
+- from: CaptureDocument
+  to: Batch
+  type: belongs_to
+  via: batch_id
+- from: Folder
+  to: CaptureDocument
+  type: has_many
+  via: path /api/v1/folders/{id}/documents
+- from: CaptureDocument
+  to: ExtractionSchema
+  type: belongs_to
+  via: organization-configured schema override
+- from: VerificationResult
+  to: CaptureDocument
+  type: has_many
+  via: document_ids[]
+- from: Webhook
+  to: CaptureDocument
+  type: observes
+  via: job-completion delivery
+- from: CaptureDocument
+  to: FraudDetection
+  type: has_one
+  via: fraud_detection
+id_prefixes:
+- entity: Application
+  prefix: APP-
+  example: APP-1234
+  note: human-readable app_id; the primary key is a UUID
+- entity: Batch
+  prefix: batch_
+  example: batch_abc123
+- entity: Capture API key
+  prefix: kita_prod_
+- entity: Underwriter API key
+  prefix: kita_uw_
+render: none — no subway/ diagram in this repo

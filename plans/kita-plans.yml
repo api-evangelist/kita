@@ -1,0 +1,47 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.kita.ai/pricing
+model: usage-based credits
+currency: USD
+plans:
+- name: Standard
+  slug: standard
+  price: 0
+  price_model: free
+  published_price: true
+  included: Up to your first 100 credits
+  features:
+  - Core APIs — Document Parse, Extract and Edit
+  - 30+ document types
+  - Email support
+- name: Growth
+  slug: growth
+  price: null
+  price_model: custom
+  published_price: false
+  highlighted: true
+  features:
+  - Everything in Standard
+  - Volume-based credit discounts
+  - Webhook integrations
+  - Custom document types
+  - Priority support
+- name: Enterprise
+  slug: enterprise
+  price: null
+  price_model: custom
+  published_price: false
+  contract: annual
+  features:
+  - Everything in Growth
+  - Steeper volume discounts
+  - Advanced security features
+  - VPC and on-premises deployment
+  - Data residency across active markets (US, PH, ID, MX, SA)
+  - SSO/SAML
+  - Dedicated solutions engineering
+free_tier:
+  available: true
+  detail: The Standard plan is free and includes the first 100 credits.
+notes: 'Only the free Standard tier carries a published price; Growth and Enterprise are
+  quoted. Batch processing requires a paid plan, and maximum file size is determined by plan.'

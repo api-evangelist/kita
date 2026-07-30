@@ -1,0 +1,103 @@
+generated: '2026-07-19'
+method: searched
+status: published
+source: 'https://www.npmjs.com/package/kita-docs-mcp, https://www.kita.ai/documentation'
+server:
+  name: kita-docs
+  package: kita-docs-mcp
+  version: 0.4.0
+  transport: stdio
+  runtime: node
+  license: MIT
+  official: true
+  repository: https://github.com/Kita-Technologies/kita-website/tree/main/mcp
+install:
+- client: Claude Code / Claude Desktop
+  command: claude mcp add kita-docs -- npx -y kita-docs-mcp
+- client: Claude Code / Claude Desktop (with execution tools)
+  command: claude mcp add kita-docs --env KITA_API_KEY=kita_prod_... -- npx -y kita-docs-mcp
+- client: Codex CLI / IDE
+  command: codex mcp add kita-docs -- npx -y kita-docs-mcp
+- client: Claude Code (Underwriter tools)
+  command: claude mcp add kita-docs --env KITA_UNDERWRITER_API_KEY=kita_uw_... -- npx -y kita-docs-mcp
+config:
+  mcpServers:
+    kita-docs:
+      command: npx
+      args:
+      - -y
+      - kita-docs-mcp
+      env:
+        KITA_API_KEY: kita_prod_...
+environment:
+- name: KITA_API_KEY
+  type: secret
+  required: false
+  description: Enables the Kita Capture execution tools. Without it the reference tools still
+    work.
+- name: KITA_API_BASE
+  type: url
+  required: false
+  default: https://api.usekita.com
+  description: Override for staging or self-hosted Kita instances.
+- name: KITA_UNDERWRITER_API_KEY
+  type: secret
+  required: false
+  description: Enables the Kita AI Underwriter tools.
+- name: KITA_UNDERWRITER_API_BASE
+  type: url
+  required: false
+  default: https://underwriter.kita.ai/api/v1
+  description: Must include the /api/v1 path segment.
+tools:
+- name: search_docs
+  description: Full-text search across the public docs and schema reference.
+  requires_key: false
+  arguments:
+  - query
+  - limit
+- name: get_schema
+  description: Full response-envelope schema for a document type (e.g. bank_statement,
+    payslip, bill, credit_report, sales_invoice).
+  requires_key: false
+  arguments:
+  - document_type
+- name: list_document_types
+  description: Every supported document type with its docs:// URI.
+  requires_key: false
+- name: process_document
+  description: Submit a document for extraction by URL; returns { document_id, status }.
+  requires_key: true
+  arguments:
+  - file_url
+  - document_type
+  - webhook_url
+  source_operation: openapi/kita-capture-openapi.yml#processDocumentAsync
+- name: get_document_status
+  description: 'Poll job status: queued | processing | completed | failed.'
+  requires_key: true
+  arguments:
+  - document_id
+  source_operation: openapi/kita-capture-openapi.yml#getDocumentResult
+- name: get_document_result
+  description: Full extraction result for a finished document.
+  requires_key: true
+  arguments:
+  - document_id
+  source_operation: openapi/kita-capture-openapi.yml#getDocumentResult
+- name: list_documents
+  description: Recent documents on the calling organization.
+  requires_key: true
+  arguments:
+  - limit
+  - offset
+  source_operation: openapi/kita-capture-openapi.yml#listDocuments
+resources:
+- uri_template: docs://schemas/<document_type>
+  description: Per-document-type response envelope reference.
+- uri_template: docs://guides/<slug>
+  description: General documentation sections.
+security:
+  server_side_only: true
+  notes: Kita documents that the server is for server-side use only and that API keys must be
+    kept out of browsers and public repositories.

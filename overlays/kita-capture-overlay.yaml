@@ -1,0 +1,69 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Kita Capture API
+  version: 1.0.0
+extends: openapi/kita-capture-openapi.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: API Evangelist enrichment pipeline
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-19'
+    x-apievangelist-provenance: 'Generated from Kita''s published documentation; Kita publishes
+      no machine-readable OpenAPI description.'
+    x-apis-json: https://raw.githubusercontent.com/api-evangelist/kita/refs/heads/main/apis.yml
+    x-authentication: authentication/kita-authentication.yml
+    x-conventions: conventions/kita-conventions.yml
+    x-error-catalog: errors/kita-problem-types.yml
+    x-rate-limits: rate-limits/kita-rate-limits.yml
+    x-data-model: data-model/kita-data-model.yml
+    x-webhooks: asyncapi/kita-capture-webhooks.yml
+- target: $.info
+  update:
+    x-async-model:
+      pattern: submit-then-poll
+      submit: POST /api/process-async
+      poll: GET /api/results/{documentId}
+      terminal_states: [completed, failed]
+      webhook_alternative: true
+- target: $.info
+  update:
+    x-idempotency:
+      supported: false
+      note: 'The Capture API documents no idempotency contract. Resubmitting the same file
+        creates a new documentId and consumes credits again.'
+- target: $.paths['/api/process-async'].post
+  update:
+    x-consumes-credits: true
+    x-agentic-consequence: write
+    x-cost-note: Each submission is billed; per-document cost is surfaced on
+      GET /api/v1/documents/jobs/{documentId}.
+- target: $.paths['/api/v1/batch'].post
+  update:
+    x-consumes-credits: true
+    x-requires-paid-plan: true
+    x-max-items: 100
+- target: $.paths['/api/v1/verify'].post
+  update:
+    x-precondition: All supplied document IDs must already be in the completed state and belong
+      to the calling organization.
+    x-check-count: 34+
+- target: $.paths['/api/v1/webhooks/{webhookId}/secret'].get
+  update:
+    x-sensitive: true
+    x-agentic-consequence: safety-critical
+    x-note: Returns a live signing secret. Never expose to a client-side or untrusted agent
+      context.
+- target: $.paths['/api/v1/webhooks/{webhookId}/rotate-secret'].post
+  update:
+    x-sensitive: true
+    x-agentic-consequence: safety-critical
+    x-note: Rotating invalidates the previous secret and will break existing verifiers until
+      they are updated.
+- target: $.components.securitySchemes.BearerAuth
+  update:
+    x-key-prefix: kita_prod_
+    x-issued-from: https://portal.usekita.com
+    x-env-var: KITA_API_KEY
+    x-server-side-only: true

@@ -1,0 +1,53 @@
+generated: '2026-07-19'
+method: searched
+source: 'https://pypi.org/project/kita/, https://www.npmjs.com/package/kita-docs-mcp,
+  https://www.kita.ai/documentation'
+registries_probed:
+- pypi
+- npm
+- maven-central
+- nuget
+- pkg.go.dev
+- rubygems
+- packagist
+- crates.io
+packages:
+- language: python
+  registry: pypi
+  name: kita
+  version: 2.1.2
+  url: https://pypi.org/project/kita/
+  install: pip install kita
+  official: true
+  description: Official Python SDK for the Kita Document Processing (Capture) API. Provides
+    KitaClient with process, process_base64, process_url, get_result, get_summary,
+    custom_export, list_documents, batch_process, batch_process_urls, batch_process_base64
+    and merge_documents, plus a DocumentResult accessor object and typed exceptions
+    (KitaError, KitaAPIError, KitaAuthenticationError, KitaRateLimitError). Type hints and
+    async support.
+  api: Kita Capture API
+  docs: https://www.kita.ai/documentation
+  source: https://github.com/usekita/kita-python-sdk
+  source_public: false
+  changelog: https://github.com/usekita/kita-python-sdk/blob/main/CHANGELOG.md
+- language: javascript
+  registry: npm
+  name: kita-docs-mcp
+  version: 0.4.0
+  url: https://www.npmjs.com/package/kita-docs-mcp
+  install: npx -y kita-docs-mcp
+  official: true
+  license: MIT
+  kind: mcp-server
+  description: Official Model Context Protocol server for Kita. Exposes the public
+    documentation and response-envelope schemas as MCP resources and the Kita REST API as
+    tools.
+  source: https://github.com/Kita-Technologies/kita-website/tree/main/mcp
+  source_public: false
+  api: Kita Capture API, Kita AI Underwriter API
+notes: 'No first-party client library was found on Maven Central, NuGet, pkg.go.dev,
+  RubyGems, Packagist or crates.io. For languages other than Python, Kita documents calling
+  the REST API directly and ships example programs for cURL, JavaScript (Node 18+), PHP 7.4+,
+  Java 11+ and C# (.NET 6+) — see examples/kita-examples.yml. The Kita AI Underwriter API has
+  no published SDK; the official examples repository carries a small reusable Python client
+  (kita_client.py) built on plain REST calls.'

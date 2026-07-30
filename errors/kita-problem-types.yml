@@ -1,0 +1,104 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.kita.ai/documentation
+also_derived_from:
+- openapi/kita-capture-openapi.yml
+- openapi/kita-underwriter-openapi.yml
+format: json
+rfc9457: false
+note: 'Kita does not use RFC 9457 problem+json. Both APIs return a plain JSON object with a
+  human-readable message and rely on the HTTP status code for machine handling. There is no
+  stable machine-readable error code registry, so the catalog below is keyed on status.'
+envelopes:
+- api: Kita Capture API
+  shape: '{ "error": "Bad Request", "message": "documents array is required and must not be
+    empty" }'
+  fields:
+  - name: error
+    description: Short error label, generally the HTTP reason phrase.
+  - name: message
+    description: Human-readable description of what went wrong.
+- api: Kita AI Underwriter API
+  shape: '{ "message": "Description of error" }'
+  fields:
+  - name: message
+    description: Human-readable description of what went wrong.
+problems:
+- status: 400
+  title: Bad Request
+  apis: [Kita Capture API, Kita AI Underwriter API]
+  meaning: Malformed body, missing required fields, or bad parameters.
+  remediation: Check the request body and parameters against the documented schema.
+  retryable: false
+- status: 401
+  title: Unauthorized
+  apis: [Kita Capture API, Kita AI Underwriter API]
+  meaning: 'API key missing, malformed, unknown, or revoked.'
+  remediation: Send a valid key on the Authorization header. Underwriter keys are prefixed
+    kita_uw_ and Capture keys kita_prod_; a revoked key cannot be recovered and must be
+    re-minted.
+  retryable: false
+- status: 403
+  title: Forbidden
+  apis: [Kita Capture API, Kita AI Underwriter API]
+  meaning: 'Underwriter — a valid key lacks the required read or write scope. Capture — an
+    upgrade is required, or the requested document type is not enabled for the organization.'
+  remediation: Mint a key with the required scope, or contact Kita to enable the document type
+    or plan feature.
+  retryable: false
+- status: 404
+  title: Not Found
+  apis: [Kita Capture API, Kita AI Underwriter API]
+  meaning: 'The application, document or batch ID does not exist within the calling
+    organization. Also returned by the Underwriter xlsx memo export when no financial spread
+    has been computed yet.'
+  remediation: Verify the identifier and organization. For the spread export, wait until the
+    credit picture has computed.
+  retryable: conditionally
+- status: 429
+  title: Too Many Requests
+  apis: [Kita Capture API]
+  meaning: Per-organization rate limit exceeded.
+  remediation: Wait for the interval given in the Retry-After response header, then retry with
+    backoff.
+  retryable: true
+  headers: [Retry-After]
+- status: 500
+  title: Internal Server Error
+  apis: [Kita Capture API, Kita AI Underwriter API]
+  meaning: Server failure.
+  remediation: Retry after a brief delay.
+  retryable: true
+- status: 502
+  title: Bad Gateway
+  apis: [Kita AI Underwriter API]
+  meaning: 'Returned by POST /intake when the application was created but the document upload
+    failed.'
+  remediation: 'Do not retry the whole intake blindly — the application exists. Either retry
+    the same intake with the same external_ref (idempotent, returns the existing application)
+    or upload the documents separately with POST /applications/{id}/documents.'
+  retryable: true
+  source_operation: openapi/kita-underwriter-openapi.yml#intakeApplication
+sdk_exceptions:
+  language: python
+  package: kita
+  classes:
+  - name: KitaError
+    description: Base SDK error.
+  - name: KitaAPIError
+    description: The API returned an error. Carries .status_code and .message.
+  - name: KitaAuthenticationError
+    description: HTTP 401 — invalid API key.
+  - name: KitaRateLimitError
+    description: HTTP 429 — rate limited. Carries .retry_after.
+job_failure_states:
+  note: 'A 2xx response does not mean extraction succeeded. Both APIs report per-item failure
+    through status fields rather than HTTP errors.'
+  capture:
+    field: status
+    failure_values: [failed]
+  underwriter:
+    document_status_field: status
+    review_values: [low_confidence, missing]
+    memo_field: last_run_status
+    memo_failure_values: [failed]

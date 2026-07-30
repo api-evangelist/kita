@@ -1,0 +1,58 @@
+generated: '2026-07-19'
+method: searched
+probe: true
+source: https://www.kita.ai/security
+url: https://www.kita.ai/security
+dedicated_trust_portal: false
+notes: 'Kita publishes a security and compliance page rather than a hosted trust portal.
+  trust.kita.ai does not resolve. Security questionnaire responses, penetration-test
+  summaries, architecture diagrams, the DPA and Standard Contractual Clauses are stated to be
+  available on request.'
+certifications:
+- name: SOC 2 Type II
+  status: in-progress
+  detail: Active engagement for an independent audit of security, availability and
+    confidentiality controls. Engagement letter available on request. Not yet certified.
+- name: ISO 27001
+  status: in-progress
+  detail: Active engagement. Engagement letter available on request. Not yet certified.
+encryption:
+  at_rest: AES-256
+  in_transit: TLS 1.3
+  notes: Document data is encrypted before it reaches disk; keys are rotated automatically.
+data_residency:
+  model: region-pinned per organization
+  regions:
+  - ap-southeast-1 (Singapore) — default for all organizations unless flagged for MX residency
+  - mx-central-1 (Mexico) — Mexican-residency customers (regulated)
+  active_markets:
+  - United States
+  - Mexico
+  - Singapore
+  - Indonesia
+  cross_region_replication: opt-in only
+legal:
+  dpa: available on request
+  standard_contractual_clauses: available on request
+subprocessors:
+  list: named list available on request
+  disclosed_categories:
+  - Vercel (hosting / edge delivery)
+  - Resend (email delivery)
+  - cloud infrastructure and AI/ML inference providers (customer-pinned)
+  - observability and support platforms
+penetration_testing:
+  cadence: annual, third-party, against production
+  between_cycles: continuous internal scanning
+enterprise_controls:
+- SSO/SAML
+- VPC and on-premises deployment options
+evidence:
+- source: https://www.kita.ai/security
+  keywords:
+  - soc 2
+  - iso 27001
+  - aes-256
+  - tls 1.3
+  - data residency
+  - subprocessors

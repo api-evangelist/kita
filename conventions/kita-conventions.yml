@@ -1,0 +1,136 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.kita.ai/documentation
+also_derived_from:
+- openapi/kita-capture-openapi.yml
+- openapi/kita-underwriter-openapi.yml
+summary: 'Kita ships two independently-versioned REST APIs with different hosts, key prefixes
+  and envelopes. Both are key-authenticated over TLS, both are asynchronous (submit then
+  poll), and both use plain JSON rather than a hypermedia or problem-details format.'
+authentication:
+  style: bearer API key
+  capture:
+    header: 'Authorization: Bearer kita_prod_...'
+  underwriter:
+    headers:
+    - 'Authorization: ApiKey kita_uw_...'
+    - 'Authorization: Bearer kita_uw_...'
+    key_scopes: [read, write]
+  see: authentication/kita-authentication.yml
+idempotency:
+  supported: true
+  api: Kita AI Underwriter API
+  mechanism: client-supplied business key
+  field: external_ref
+  parameter_location: request body
+  operation: POST /intake (openapi/kita-underwriter-openapi.yml#intakeApplication)
+  behavior: 'Retrying an intake with the same external_ref returns the existing application
+    with HTTP 200 and "idempotent": true rather than creating a duplicate, and skips
+    re-uploading documents. A first-time intake returns 201.'
+  header: none — Kita does not use an Idempotency-Key header
+  retention: not documented
+  scope: per organization
+  capture_api: 'No idempotency contract is documented for the Kita Capture API; resubmitting
+    the same file creates a new documentId.'
+pagination:
+  style: offset
+  capture:
+    endpoint: GET /api/v1/documents
+    params: [limit, offset]
+    defaults: {limit: 100, offset: 0}
+    filters: [status, document_type]
+    response_field: documents
+  underwriter:
+    endpoint: GET /applications
+    params: [limit, offset]
+    defaults: {limit: 50, offset: 0}
+    limits: {min: 1, max: 200}
+    filters: [status]
+    response_envelope: '{ "data": [...], "pagination": { "total", "limit", "offset" } }'
+  cursor_support: false
+incremental_sync:
+  supported: true
+  api: Kita AI Underwriter API
+  mechanism: 'GET /applications/{id}/conversation?after=<display_order> returns only messages
+    newer than the supplied display_order.'
+response_envelope:
+  underwriter: 'Every response except binary exports is wrapped as { "data": ... }; list
+    responses add a sibling "pagination" object.'
+  capture: 'Result objects are returned unwrapped, sharing a common shape: status,
+    document_type, document_id, filename, processing_time_seconds, uploaded_at, metadata,
+    extracted_data and (when present) fraud_detection.'
+error_envelope:
+  underwriter: '{ "message": "..." } with a standard HTTP status.'
+  capture: '{ "error": "Bad Request", "message": "..." }'
+  rfc9457: false
+  content_type: application/json
+  see: errors/kita-problem-types.yml
+async_processing:
+  model: submit then poll
+  capture:
+    submit: 'POST /api/process-async returns { documentId, status: "pending" }'
+    poll: 'GET /api/results/{documentId} until status is "completed"'
+    statuses: [pending, processing, completed, failed]
+    webhooks: 'Supported — register HMAC-signed endpoints, or pass a one-shot webhook_url on
+      upload or batch creation.'
+  underwriter:
+    documents: 'Poll until document status moves from awaiting/processing to
+      verified/low_confidence.'
+    memo: 'Poll GET /applications/{id}/memo/status until synthesis_in_progress is false AND
+      is_stale is false.'
+    backoff: 'Kita recommends starting at 2–3 seconds with exponential backoff, not a tight
+      loop.'
+    webhooks: not supported — polling only
+versioning:
+  scheme: uri-path
+  capture: 'Mixed — newer surfaces live under /api/v1/ (documents, batch, verify, webhooks,
+    folders, schemas) while the original process and results endpoints sit at /api/.'
+  underwriter: /api/v1
+  breaking_changes: ship as a new version
+  see: lifecycle/kita-lifecycle.yml
+rate_limiting:
+  capture:
+    enforced: true
+    scope: per organization
+    signal: HTTP 429 with a Retry-After header
+    published_numbers: false
+  underwriter:
+    enforced: not documented
+    guidance: 'run document pushes at reasonable concurrency and poll on backoff (every few
+      seconds, not a tight loop); coordinate heavy programmatic load with your Kita contact'
+  see: rate-limits/kita-rate-limits.yml
+request_tracing:
+  request_id_header: not documented
+field_expansion:
+  supported: partial
+  mechanism: 'GET /applications/{id}/documents?include=download_url adds one-hour signed
+    download URLs. There is no general sparse-fieldset or expansion grammar.'
+metadata:
+  custom_metadata_field: false
+  note: 'Underwriter applications carry external_ref for the caller''s own record ID and
+    application_context for free text; Kita Capture offers folders and custom extraction
+    schemas as the organizational primitives.'
+content_types:
+  request: [application/json, multipart/form-data]
+  response: [application/json, text/plain, text/csv, application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]
+  base64_upload: 'Kita Capture accepts file_base64 with filename as an alternative to
+    multipart; a data: URI prefix is accepted and stripped automatically.'
+identifiers:
+  underwriter_application: UUID or human app_id (e.g. APP-1234); both are accepted in the path
+  capture_document: integer documentId
+  capture_batch: string prefixed batch_ (e.g. batch_abc123)
+data_residency:
+  model: 'Region is determined by the organization''s configured residency, not by the API
+    host. Request and response shapes are identical across regions.'
+  regions: [ap-southeast-1, mx-central-1]
+cost_reporting:
+  supported: true
+  api: Kita Capture API
+  fields: [documents.total_cost_usd, documents.cost_report, batch_jobs.total_cost_usd]
+  surfaced_on: GET /api/v1/documents/jobs/{documentId} and batch result endpoints
+cross_links:
+  errors: errors/kita-problem-types.yml
+  lifecycle: lifecycle/kita-lifecycle.yml
+  authentication: authentication/kita-authentication.yml
+  rate_limits: rate-limits/kita-rate-limits.yml
+  webhooks: asyncapi/kita-capture-webhooks.yml
