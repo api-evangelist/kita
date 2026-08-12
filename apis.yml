@@ -276,6 +276,8 @@ apis:
   - type: APIReference
     url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
 common:
+- type: Overlay
+  url: overlays/kita-capture-overlay.yaml
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/kita/overview
 - type: DeveloperPortal
