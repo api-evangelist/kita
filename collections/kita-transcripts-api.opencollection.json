@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Transcripts API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transcripts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get one document's transcript",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/documents/:docId/transcript",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              },
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "Document identifier."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get one document's transcript"
+        },
+        {
+          "info": {
+            "name": "Get transcripts for every document in the file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/transcripts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get transcripts for every document in the file"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Credit API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Credit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the deterministic credit picture",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/credit",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              }
+            ]
+          },
+          "docs": "Returns the normalized `spread` (adjusted EBITDA/net income, DSCR, margins,\ndebt-to-worth, current ratio, reserve months, LTV, sensitivity table, per-metric\nprovenance), the `adjustments` line items (tagged `ai` or `lo`), and the policy\nengine `decision` with every rule's pass/fail. Values come from a versioned\ncalculation engine, not from an LLM. Layers are null until computed.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

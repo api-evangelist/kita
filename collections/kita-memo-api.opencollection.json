@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Memo API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Memo",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the credit memo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/memo",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              }
+            ]
+          },
+          "docs": "Returns memo sections with citations. Bodies are plain text."
+        },
+        {
+          "info": {
+            "name": "Synthesize the credit memo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/applications/:id/memo",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              }
+            ]
+          },
+          "docs": "Drafts or redrafts the cited credit memo. Runs inline for up to roughly 120 seconds."
+        },
+        {
+          "info": {
+            "name": "Get memo synthesis status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/memo/status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              }
+            ]
+          },
+          "docs": "Poll until `synthesis_in_progress` is false and `is_stale` is false."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

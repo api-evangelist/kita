@@ -1,0 +1,267 @@
+{
+  "item": [
+    {
+      "id": "48ae6535-036d-40c1-afe0-b0abdb0875ed",
+      "name": "Conversation",
+      "description": {
+        "content": "Borrower message thread.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "215e4663-5422-4760-9cd9-e6cc292c7b4e",
+          "name": "Get the borrower conversation thread",
+          "request": {
+            "name": "Get the borrower conversation thread",
+            "description": {
+              "content": "Returns `conversation_messages`. Pass `after` to fetch only newer messages for incremental sync.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":id",
+                "conversation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<integer>",
+                  "description": "Return only messages with a higher `display_order`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Application UUID or human `app_id` (e.g. `APP-1234`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d0ef6da1-5247-4aa7-95ad-572c5a454e36",
+              "name": "The conversation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":id",
+                    "conversation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Application UUID or human `app_id` (e.g. `APP-1234`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7cf1f3d-f932-4a2a-9810-599ac425021a",
+              "name": "Missing, malformed, unknown, or revoked API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":id",
+                    "conversation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Application UUID or human `app_id` (e.g. `APP-1234`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a32af6a4-4752-4424-a44d-a4c87553dc04",
+              "name": "Resource not found in this organization.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":id",
+                    "conversation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Application UUID or human `app_id` (e.g. `APP-1234`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://portal.usekita.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7433f471-9c55-4eab-b282-bd491627930f",
+    "name": "Kita Capture Applications Conversation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Kita Capture turns scanned or photographed financial and identity documents into clean\nJSON — transactions, metadata, metrics, and fraud signals. Upload a file (multipart or\nbase64), submit a URL, or batch up to 100 documents, then poll for results or receive an\nHMAC-signed webhook.\n\nAuthentication uses an organization API key prefixed `kita_prod_` sent as\n`Authorization: Bearer <key>`. Errors return `{ \"error\": ..., \"message\": ... }`.\nRate limiting is per organization; 429 responses carry a `Retry-After` header.\n\nNOTE: Kita does not publish a machine-readable OpenAPI description. This document was\ngenerated by the API Evangelist enrichment pipeline from Kita's own published API\ndocumentation (shipped verbatim inside the official `kita-docs-mcp` npm package and\nserved at https://www.kita.ai/documentation). Only operations, parameters, fields and\nstatus codes that Kita documents are represented here.\n\n\nContact Support:\n Name: Kita Support\n Email: support@kita.ai",
+      "type": "text/plain"
+    }
+  }
+}

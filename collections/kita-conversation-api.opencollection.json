@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Conversation API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Conversation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the borrower conversation thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/conversation",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Return only messages with a higher `display_order`."
+              }
+            ]
+          },
+          "docs": "Returns `conversation_messages`. Pass `after` to fetch only newer messages for incremental sync."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Schemas API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Schemas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List custom extraction schemas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/schemas"
+          },
+          "docs": "List custom extraction schemas"
+        },
+        {
+          "info": {
+            "name": "Create a custom extraction schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/api/v1/schemas",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enterprise organizations can define custom extraction shapes that override the default vocabulary output."
+        },
+        {
+          "info": {
+            "name": "Fetch a single schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/schemas/:schemaId",
+            "params": [
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch a single schema"
+        },
+        {
+          "info": {
+            "name": "Update a schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://portal.usekita.com/api/v1/schemas/:schemaId",
+            "params": [
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a schema"
+        },
+        {
+          "info": {
+            "name": "Delete a schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://portal.usekita.com/api/v1/schemas/:schemaId",
+            "params": [
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a schema"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

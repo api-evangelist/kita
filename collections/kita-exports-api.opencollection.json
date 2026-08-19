@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Exports API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Exports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export the credit memo or financial spread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/memo/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "`pdf` (default) returns the credit memo PDF. `xlsx` returns the financial spread\nworkbook — income statement, UCA cash flow, DSCR, sensitivity. Returns 404 if no\nspread has been computed yet.\n"
+        },
+        {
+          "info": {
+            "name": "Export the raw field-extractions workbook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Downloads the extraction workbook as .xlsx, one sheet per file area. Distinct from the memo spread export."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

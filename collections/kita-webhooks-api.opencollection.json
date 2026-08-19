@@ -1,0 +1,232 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Webhooks API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List registered webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/webhooks"
+          },
+          "docs": "List registered webhooks"
+        },
+        {
+          "info": {
+            "name": "Register a webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/api/v1/webhooks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a webhook endpoint"
+        },
+        {
+          "info": {
+            "name": "Get a single webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a single webhook"
+        },
+        {
+          "info": {
+            "name": "Update a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://portal.usekita.com/api/v1/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the URL, subscribed events, or active flag."
+        },
+        {
+          "info": {
+            "name": "Delete a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://portal.usekita.com/api/v1/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a webhook"
+        },
+        {
+          "info": {
+            "name": "Send a test delivery",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/api/v1/webhooks/:webhookId/test",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Send a test delivery"
+        },
+        {
+          "info": {
+            "name": "Rotate the signing secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/api/v1/webhooks/:webhookId/rotate-secret",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Rotate the signing secret"
+        },
+        {
+          "info": {
+            "name": "Retrieve the current signing secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/webhooks/:webhookId/secret",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the current signing secret"
+        },
+        {
+          "info": {
+            "name": "Get delivery history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/webhooks/:webhookId/deliveries",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delivery status, attempts and latency."
+        },
+        {
+          "info": {
+            "name": "Get delivery aggregates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/webhooks/stats"
+          },
+          "docs": "Get delivery aggregates"
+        },
+        {
+          "info": {
+            "name": "Get the dead-letter queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/webhooks/dlq"
+          },
+          "docs": "Deliveries that failed every retry."
+        },
+        {
+          "info": {
+            "name": "Pre-flight check a candidate webhook URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/api/v1/webhooks/validate-url",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pre-flight check a candidate webhook URL"
+        },
+        {
+          "info": {
+            "name": "Verify a sample payload signature",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/api/v1/webhooks/verify-signature",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Helper that checks an `X-Kita-Signature` value against a sample body."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

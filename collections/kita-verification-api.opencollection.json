@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Verification API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run cross-document verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/api/v1/verify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs 34+ cross-document checks over documents already processed — e.g. confirming a payslip, bank statement and ID belong to the same applicant."
+        },
+        {
+          "info": {
+            "name": "Get the full fraud-detection block for one document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/api/v1/verify/single",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get the full fraud-detection block for one document"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

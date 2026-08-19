@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Processing API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Processing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit a document for extraction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/api/process-async",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts two upload modes on the same URL. Multipart sends the raw `file` plus a\n`document_type`. JSON sends `file_base64` (a data-URI prefix is accepted and stripped)\nplus `filename` and `document_type`. Returns a `documentId` to poll. An optional\none-shot `webhook_url` delivers the result instead of polling.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

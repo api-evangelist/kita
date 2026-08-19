@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Documents API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List documents on an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/documents",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Pass `download_url` to add signed download URLs valid for one hour."
+              }
+            ]
+          },
+          "docs": "List documents on an application"
+        },
+        {
+          "info": {
+            "name": "Upload borrower documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://portal.usekita.com/applications/:id/documents",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "files",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload one or more files as multipart/form-data. Each file's extraction pipeline runs after the response returns."
+        },
+        {
+          "info": {
+            "name": "Get a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/applications/:id/documents/:docId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              },
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "Document identifier."
+              }
+            ]
+          },
+          "docs": "Returns the document plus the structured `kita_raw` extraction, `recommendations`, and `inconsistencies`."
+        },
+        {
+          "info": {
+            "name": "Delete a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://portal.usekita.com/applications/:id/documents/:docId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID or human `app_id` (e.g. `APP-1234`)."
+              },
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "Document identifier."
+              }
+            ]
+          },
+          "docs": "Deletes the file and recomputes file completeness."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

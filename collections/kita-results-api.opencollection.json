@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kita Capture Applications Results API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Results",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the extraction result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/results/:documentId",
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the full processed result. Poll until `status` is `completed`."
+        },
+        {
+          "info": {
+            "name": "Get key metrics for a bank statement or passbook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/documents/:id/summary",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Account info, flows, balances and category breakdowns. No transaction-level data."
+        },
+        {
+          "info": {
+            "name": "List processed documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/documents",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "document_type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all processed documents for the organization, with offset pagination and filters."
+        },
+        {
+          "info": {
+            "name": "Download the schema-driven Excel export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/documents/:id/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Multi-sheet Excel for schema-based types — `audited_financial_statement` (17-sheet workbook), `credit_report`, `slik` and others."
+        },
+        {
+          "info": {
+            "name": "Download the organization's configured Excel export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/documents/:id/custom-export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Works for all document types where the organization has a custom export schema enabled."
+        },
+        {
+          "info": {
+            "name": "Get the processing job for a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://portal.usekita.com/api/v1/documents/jobs/:documentId",
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Surfaces per-document cost reporting — `total_cost_usd` and the `cost_report` per-call breakdown (model, prompt/completion tokens, USD per call, stage)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
