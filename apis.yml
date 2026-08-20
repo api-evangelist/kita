@@ -47,6 +47,19 @@ tags:
 - Document Extraction
 - Fraud Detection
 - Artificial Intelligence
+- Computer-Vision
+- Emerging Markets
+- Loan Origination
+tags_raw:
+- Company
+- Fintech
+- Lending
+- Underwriting
+- Credit Scoring
+- Document Intelligence
+- Document Extraction
+- Fraud Detection
+- Artificial Intelligence
 - Computer Vision
 - Emerging Markets
 - Loan Origination
@@ -57,6 +70,8 @@ apis:
   humanURL: https://www.kita.ai/capture
   baseURL: https://portal.usekita.com
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
@@ -137,6 +152,8 @@ apis:
   humanURL: https://www.kita.ai/capture
   baseURL: https://portal.usekita.com
   tags:
+  - Export
+  tags_raw:
   - Exports
   properties:
   - type: OpenAPI
@@ -265,6 +282,8 @@ apis:
   humanURL: https://www.kita.ai/capture
   baseURL: https://portal.usekita.com
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
