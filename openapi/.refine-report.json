@@ -1,40 +1,47 @@
 {
   "provider": "kita",
   "sources": [
-    "kita-applications-api-openapi.yml",
-    "kita-batch-api-openapi.yml",
-    "kita-conversation-api-openapi.yml",
-    "kita-credit-api-openapi.yml",
-    "kita-documents-api-openapi.yml",
-    "kita-exports-api-openapi.yml",
-    "kita-folders-api-openapi.yml",
-    "kita-memo-api-openapi.yml",
-    "kita-processing-api-openapi.yml",
-    "kita-results-api-openapi.yml",
-    "kita-schemas-api-openapi.yml",
-    "kita-transcripts-api-openapi.yml",
-    "kita-verification-api-openapi.yml",
-    "kita-webhooks-api-openapi.yml"
+    "_original/kita-capture-openapi.yml",
+    "_original/kita-underwriter-openapi.yml"
   ],
   "outputs": [
-    "kita-applications-api-openapi.yml",
     "kita-batch-api-openapi.yml",
+    "kita-folders-api-openapi.yml",
+    "kita-processing-api-openapi.yml",
+    "kita-results-api-openapi.yml",
+    "kita-schemas-api-openapi.yml",
+    "kita-verification-api-openapi.yml",
+    "kita-webhooks-api-openapi.yml",
+    "kita-applications-api-openapi.yml",
     "kita-conversation-api-openapi.yml",
     "kita-credit-api-openapi.yml",
     "kita-documents-api-openapi.yml",
     "kita-exports-api-openapi.yml",
-    "kita-folders-api-openapi.yml",
     "kita-memo-api-openapi.yml",
-    "kita-processing-api-openapi.yml",
-    "kita-results-api-openapi.yml",
-    "kita-schemas-api-openapi.yml",
-    "kita-transcripts-api-openapi.yml",
-    "kita-verification-api-openapi.yml",
-    "kita-webhooks-api-openapi.yml"
+    "kita-transcripts-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "kita-capture-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "kita-underwriter-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0"
+  ],
+  "skipped": [
+    "kita-applications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-batch-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-conversation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-credit-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-exports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-folders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-memo-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-processing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-results-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-schemas-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-transcripts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-verification-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kita-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

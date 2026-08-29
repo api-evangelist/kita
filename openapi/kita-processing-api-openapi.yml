@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Kita Capture Applications Processing API
+  title: Kita Capture Processing API
   version: v1
   summary: Document intelligence — extract structured, validated, fraud-checked data from bank statements, payslips, IDs, credit reports and 30+ other document types.
   description: 'Kita Capture turns scanned or photographed financial and identity documents into clean
@@ -140,12 +140,15 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   responses:
-    Forbidden:
-      description: Upgrade required, or the document type is not enabled for this organization.
+    BadRequest:
+      description: Bad request — check the request body and parameters.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          example:
+            error: Bad Request
+            message: documents array is required and must not be empty
     RateLimited:
       description: Rate limited. Wait and retry; check the `Retry-After` header.
       headers:
@@ -157,21 +160,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Upgrade required, or the document type is not enabled for this organization.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Invalid or missing API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — check the request body and parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Bad Request
-            message: documents array is required and must not be empty
     ServerError:
       description: Server error — retry after a brief delay.
       content:
@@ -188,22 +188,6 @@ components:
         message:
           type: string
           description: Human-readable description.
-    ProcessAccepted:
-      type: object
-      properties:
-        documentId:
-          type: integer
-        status:
-          $ref: '#/components/schemas/JobStatus'
-        message:
-          type: string
-    JobStatus:
-      type: string
-      enum:
-      - pending
-      - processing
-      - completed
-      - failed
     DocumentType:
       type: string
       description: 'Document type slug. Case-insensitive. Three types run the legacy stage-config pipeline
@@ -257,6 +241,22 @@ components:
       - insurance_policy
       - loan_agreement
       - income_tax_return
+    JobStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - completed
+      - failed
+    ProcessAccepted:
+      type: object
+      properties:
+        documentId:
+          type: integer
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        message:
+          type: string
   securitySchemes:
     BearerAuth:
       type: http
