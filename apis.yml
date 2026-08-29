@@ -13,6 +13,18 @@ description: 'Kita is an AI-native loan origination and underwriting company (Y 
   cited credit memo. The platform is region-pinned across Singapore and Mexico deployments
   and is used by microfinance institutions, SME lenders, CDFIs and community banks across
   Southeast Asia, Latin America and the United States.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
