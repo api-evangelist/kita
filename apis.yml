@@ -116,6 +116,8 @@ apis:
   humanURL: https://www.kita.ai/capture
   baseURL: https://portal.usekita.com
   tags:
+  - Conversations
+  tags_raw:
   - Conversation
   properties:
   - type: OpenAPI
@@ -246,6 +248,8 @@ apis:
   humanURL: https://www.kita.ai/capture
   baseURL: https://portal.usekita.com
   tags:
+  - Schema
+  tags_raw:
   - Schemas
   properties:
   - type: OpenAPI
