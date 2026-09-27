@@ -135,17 +135,15 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    RateLimited:
-      description: Rate limited. Wait and retry; check the `Retry-After` header.
-      headers:
-        Retry-After:
-          description: Seconds to wait before retrying.
-          schema:
-            type: integer
+    BadRequest:
+      description: Bad request — check the request body and parameters.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          example:
+            error: Bad Request
+            message: documents array is required and must not be empty
     NotFound:
       description: Document or batch ID does not exist.
       content:
@@ -164,16 +162,34 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — check the request body and parameters.
+    RateLimited:
+      description: Rate limited. Wait and retry; check the `Retry-After` header.
+      headers:
+        Retry-After:
+          description: Seconds to wait before retrying.
+          schema:
+            type: integer
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-          example:
-            error: Bad Request
-            message: documents array is required and must not be empty
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Short error label.
+        message:
+          type: string
+          description: Human-readable description.
+    JobStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - completed
+      - failed
     DocumentType:
       type: string
       description: 'Document type slug. Case-insensitive. Three types run the legacy stage-config pipeline
@@ -227,13 +243,6 @@ components:
       - insurance_policy
       - loan_agreement
       - income_tax_return
-    JobStatus:
-      type: string
-      enum:
-      - pending
-      - processing
-      - completed
-      - failed
     Batch:
       type: object
       properties:
@@ -262,15 +271,6 @@ components:
                 type: string
               status:
                 $ref: '#/components/schemas/JobStatus'
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Short error label.
-        message:
-          type: string
-          description: Human-readable description.
   parameters:
     BatchId:
       name: batchId

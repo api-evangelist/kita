@@ -247,15 +247,11 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Pagination:
+    ApplicationEnvelope:
       type: object
       properties:
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
+        data:
+          $ref: '#/components/schemas/Application'
     ApplicationCreate:
       type: object
       required:
@@ -289,34 +285,14 @@ components:
           type: boolean
           default: false
           description: Email the borrower for missing documents.
-    ApplicationEnvelope:
+    Error:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/Application'
-    ApplicationUpdate:
-      type: object
-      properties:
-        business_name:
+        message:
           type: string
-        loan_type:
-          type: string
-        loan_amount:
-          type: number
-        application_context:
-          type: string
-        status:
-          $ref: '#/components/schemas/ApplicationStatus'
-    ApplicationStatus:
-      type: string
-      enum:
-      - submitted
-      - awaiting_docs
-      - underwriting
-      - question_raised
-      - memo_drafted
-      - approved
-      - declined
+          description: Human-readable description of the error.
+      required:
+      - message
     Application:
       type: object
       properties:
@@ -336,15 +312,53 @@ components:
         idempotent:
           type: boolean
           description: Present and true on an idempotent intake replay.
-    Error:
+    ApplicationStatus:
+      type: string
+      enum:
+      - submitted
+      - awaiting_docs
+      - underwriting
+      - question_raised
+      - memo_drafted
+      - approved
+      - declined
+    ApplicationUpdate:
       type: object
       properties:
-        message:
+        business_name:
           type: string
-          description: Human-readable description of the error.
-      required:
-      - message
+        loan_type:
+          type: string
+        loan_amount:
+          type: number
+        application_context:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+  parameters:
+    ApplicationId:
+      name: id
+      in: path
+      required: true
+      description: Application UUID or human `app_id` (e.g. `APP-1234`).
+      schema:
+        type: string
   responses:
+    BadRequest:
+      description: Malformed body, missing fields, or bad parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: Resource not found in this organization.
       content:
@@ -363,20 +377,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed body, missing fields, or bad parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    ApplicationId:
-      name: id
-      in: path
-      required: true
-      description: Application UUID or human `app_id` (e.g. `APP-1234`).
-      schema:
-        type: string
   securitySchemes:
     ApiKeyAuth:
       type: http

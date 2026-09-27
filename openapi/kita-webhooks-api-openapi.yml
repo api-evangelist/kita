@@ -303,6 +303,15 @@ components:
           type: string
           description: Human-readable description.
   responses:
+    BadRequest:
+      description: Bad request — check the request body and parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Bad Request
+            message: documents array is required and must not be empty
     NotFound:
       description: Document or batch ID does not exist.
       content:
@@ -315,15 +324,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — check the request body and parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Bad Request
-            message: documents array is required and must not be empty
   securitySchemes:
     BearerAuth:
       type: http

@@ -15,15 +15,19 @@ description: 'Kita is an AI-native loan origination and underwriting company (Y 
   Southeast Asia, Latin America and the United States.'
 deliveryModel:
   model: saas
-  open_source: false
+  license_evidence:
+    not_product:
+    - kita-technologies/kita-api-examples
+  open_source: unknown
   commercial: true
   callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: high
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -57,9 +61,9 @@ tags:
 - Credit Scoring
 - Document Intelligence
 - Document Extraction
-- Fraud Detection
+- Fraud Prevention
 - Artificial Intelligence
-- Computer-Vision
+- Computer Vision
 - Emerging Markets
 - Loan Origination
 tags_raw:
@@ -75,6 +79,7 @@ tags_raw:
 - Computer Vision
 - Emerging Markets
 - Loan Origination
+- Computer-Vision
 apis:
 - aid: kita:kita-applications-api
   name: Kita Applications API

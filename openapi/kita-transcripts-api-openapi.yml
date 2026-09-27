@@ -101,6 +101,21 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    ApplicationId:
+      name: id
+      in: path
+      required: true
+      description: Application UUID or human `app_id` (e.g. `APP-1234`).
+      schema:
+        type: string
+    DocumentId:
+      name: docId
+      in: path
+      required: true
+      description: Document identifier.
+      schema:
+        type: string
   responses:
     NotFound:
       description: Resource not found in this organization.
@@ -114,21 +129,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    DocumentId:
-      name: docId
-      in: path
-      required: true
-      description: Document identifier.
-      schema:
-        type: string
-    ApplicationId:
-      name: id
-      in: path
-      required: true
-      description: Application UUID or human `app_id` (e.g. `APP-1234`).
-      schema:
-        type: string
   schemas:
     Error:
       type: object
