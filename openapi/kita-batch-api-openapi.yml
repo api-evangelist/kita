@@ -135,15 +135,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    BadRequest:
-      description: Bad request — check the request body and parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Bad Request
-            message: documents array is required and must not be empty
     NotFound:
       description: Document or batch ID does not exist.
       content:
@@ -156,6 +147,15 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — check the request body and parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Bad Request
+            message: documents array is required and must not be empty
     Forbidden:
       description: Upgrade required, or the document type is not enabled for this organization.
       content:
@@ -183,13 +183,34 @@ components:
         message:
           type: string
           description: Human-readable description.
-    JobStatus:
-      type: string
-      enum:
-      - pending
-      - processing
-      - completed
-      - failed
+    Batch:
+      type: object
+      properties:
+        batch_id:
+          type: string
+        status:
+          type: string
+        total_documents:
+          type: integer
+        completed:
+          type: integer
+        failed:
+          type: integer
+        progress_percent:
+          type: number
+        status_url:
+          type: string
+        documents:
+          type: array
+          items:
+            type: object
+            properties:
+              document_id:
+                type: integer
+              filename:
+                type: string
+              status:
+                $ref: '#/components/schemas/JobStatus'
     DocumentType:
       type: string
       description: 'Document type slug. Case-insensitive. Three types run the legacy stage-config pipeline
@@ -243,34 +264,13 @@ components:
       - insurance_policy
       - loan_agreement
       - income_tax_return
-    Batch:
-      type: object
-      properties:
-        batch_id:
-          type: string
-        status:
-          type: string
-        total_documents:
-          type: integer
-        completed:
-          type: integer
-        failed:
-          type: integer
-        progress_percent:
-          type: number
-        status_url:
-          type: string
-        documents:
-          type: array
-          items:
-            type: object
-            properties:
-              document_id:
-                type: integer
-              filename:
-                type: string
-              status:
-                $ref: '#/components/schemas/JobStatus'
+    JobStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - completed
+      - failed
   parameters:
     BatchId:
       name: batchId

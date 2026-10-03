@@ -141,13 +141,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    ApplicationId:
-      name: id
-      in: path
-      required: true
-      description: Application UUID or human `app_id` (e.g. `APP-1234`).
-      schema:
-        type: string
     DocumentId:
       name: docId
       in: path
@@ -155,7 +148,22 @@ components:
       description: Document identifier.
       schema:
         type: string
+    ApplicationId:
+      name: id
+      in: path
+      required: true
+      description: Application UUID or human `app_id` (e.g. `APP-1234`).
+      schema:
+        type: string
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+      required:
+      - message
     Document:
       type: object
       properties:
@@ -187,23 +195,15 @@ components:
       - verified
       - low_confidence
       - missing
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable description of the error.
-      required:
-      - message
   responses:
-    BadRequest:
-      description: Malformed body, missing fields, or bad parameters.
+    Unauthorized:
+      description: Missing, malformed, unknown, or revoked API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found in this organization.
+    BadRequest:
+      description: Malformed body, missing fields, or bad parameters.
       content:
         application/json:
           schema:
@@ -214,8 +214,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, malformed, unknown, or revoked API key.
+    NotFound:
+      description: Resource not found in this organization.
       content:
         application/json:
           schema:

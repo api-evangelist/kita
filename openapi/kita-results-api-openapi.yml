@@ -238,14 +238,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    Unauthorized:
-      description: Invalid or missing API key.
+    NotFound:
+      description: Document or batch ID does not exist.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Document or batch ID does not exist.
+    Unauthorized:
+      description: Invalid or missing API key.
       content:
         application/json:
           schema:
@@ -271,13 +271,31 @@ components:
         message:
           type: string
           description: Human-readable description.
-    JobStatus:
-      type: string
-      enum:
-      - pending
-      - processing
-      - completed
-      - failed
+    DocumentResult:
+      type: object
+      description: Shared envelope for every document type.
+      properties:
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_id:
+          type: integer
+        filename:
+          type: string
+        processing_time_seconds:
+          type: number
+        uploaded_at:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          description: Document-level info — account holder, dates, institution.
+        extracted_data:
+          type: object
+          description: Type-specific extracted content.
+        fraud_detection:
+          $ref: '#/components/schemas/FraudDetection'
     DocumentType:
       type: string
       description: 'Document type slug. Case-insensitive. Three types run the legacy stage-config pipeline
@@ -331,31 +349,13 @@ components:
       - insurance_policy
       - loan_agreement
       - income_tax_return
-    DocumentResult:
-      type: object
-      description: Shared envelope for every document type.
-      properties:
-        status:
-          $ref: '#/components/schemas/JobStatus'
-        document_type:
-          $ref: '#/components/schemas/DocumentType'
-        document_id:
-          type: integer
-        filename:
-          type: string
-        processing_time_seconds:
-          type: number
-        uploaded_at:
-          type: string
-          format: date-time
-        metadata:
-          type: object
-          description: Document-level info — account holder, dates, institution.
-        extracted_data:
-          type: object
-          description: Type-specific extracted content.
-        fraud_detection:
-          $ref: '#/components/schemas/FraudDetection'
+    JobStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - completed
+      - failed
     FraudDetection:
       type: object
       description: Fraud and authenticity signals. Present only when data exists.

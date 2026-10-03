@@ -56,6 +56,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+      required:
+      - message
     CreditPicture:
       type: object
       properties:
@@ -73,14 +81,6 @@ components:
           type: object
           nullable: true
           description: Policy engine routing recommendation, auto-route flag, per-rule pass/fail with observed vs expected.
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable description of the error.
-      required:
-      - message
   parameters:
     ApplicationId:
       name: id
@@ -90,14 +90,14 @@ components:
       schema:
         type: string
   responses:
-    NotFound:
-      description: Resource not found in this organization.
+    Unauthorized:
+      description: Missing, malformed, unknown, or revoked API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, malformed, unknown, or revoked API key.
+    NotFound:
+      description: Resource not found in this organization.
       content:
         application/json:
           schema:

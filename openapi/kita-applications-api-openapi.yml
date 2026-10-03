@@ -247,11 +247,52 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ApplicationEnvelope:
+    Error:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/Application'
+        message:
+          type: string
+          description: Human-readable description of the error.
+      required:
+      - message
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+    ApplicationStatus:
+      type: string
+      enum:
+      - submitted
+      - awaiting_docs
+      - underwriting
+      - question_raised
+      - memo_drafted
+      - approved
+      - declined
+    Application:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        app_id:
+          type: string
+          examples:
+          - APP-1234
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+        file_completeness:
+          type: number
+        document_count:
+          type: integer
+        idempotent:
+          type: boolean
+          description: Present and true on an idempotent intake replay.
     ApplicationCreate:
       type: object
       required:
@@ -285,43 +326,6 @@ components:
           type: boolean
           default: false
           description: Email the borrower for missing documents.
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable description of the error.
-      required:
-      - message
-    Application:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        app_id:
-          type: string
-          examples:
-          - APP-1234
-        status:
-          $ref: '#/components/schemas/ApplicationStatus'
-        file_completeness:
-          type: number
-        document_count:
-          type: integer
-        idempotent:
-          type: boolean
-          description: Present and true on an idempotent intake replay.
-    ApplicationStatus:
-      type: string
-      enum:
-      - submitted
-      - awaiting_docs
-      - underwriting
-      - question_raised
-      - memo_drafted
-      - approved
-      - declined
     ApplicationUpdate:
       type: object
       properties:
@@ -335,15 +339,11 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/ApplicationStatus'
-    Pagination:
+    ApplicationEnvelope:
       type: object
       properties:
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
+        data:
+          $ref: '#/components/schemas/Application'
   parameters:
     ApplicationId:
       name: id
@@ -353,26 +353,26 @@ components:
       schema:
         type: string
   responses:
-    BadRequest:
-      description: Malformed body, missing fields, or bad parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found in this organization.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing, malformed, unknown, or revoked API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed body, missing fields, or bad parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Valid key lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found in this organization.
       content:
         application/json:
           schema:

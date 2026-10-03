@@ -99,33 +99,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    ApplicationId:
-      name: id
-      in: path
-      required: true
-      description: Application UUID or human `app_id` (e.g. `APP-1234`).
-      schema:
-        type: string
-  responses:
-    NotFound:
-      description: Resource not found in this organization.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, malformed, unknown, or revoked API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Valid key lacks the required scope.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -135,28 +108,6 @@ components:
           description: Human-readable description of the error.
       required:
       - message
-    Memo:
-      type: object
-      properties:
-        last_synthesis_at:
-          type: string
-          format: date-time
-        sections:
-          type: array
-          items:
-            type: object
-            properties:
-              section_number:
-                type: integer
-              title:
-                type: string
-              body:
-                type: string
-              locked_by_lo:
-                type: boolean
-              updated_at:
-                type: string
-                format: date-time
     MemoStatus:
       type: object
       properties:
@@ -180,6 +131,55 @@ components:
         last_synthesis_at:
           type: string
           format: date-time
+    Memo:
+      type: object
+      properties:
+        last_synthesis_at:
+          type: string
+          format: date-time
+        sections:
+          type: array
+          items:
+            type: object
+            properties:
+              section_number:
+                type: integer
+              title:
+                type: string
+              body:
+                type: string
+              locked_by_lo:
+                type: boolean
+              updated_at:
+                type: string
+                format: date-time
+  parameters:
+    ApplicationId:
+      name: id
+      in: path
+      required: true
+      description: Application UUID or human `app_id` (e.g. `APP-1234`).
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing, malformed, unknown, or revoked API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Valid key lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found in this organization.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: http
