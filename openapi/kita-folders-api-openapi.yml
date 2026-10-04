@@ -74,7 +74,23 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Short error label.
+        message:
+          type: string
+          description: Human-readable description.
   responses:
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: Document or batch ID does not exist.
       content:
@@ -90,22 +106,6 @@ components:
           example:
             error: Bad Request
             message: documents array is required and must not be empty
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Short error label.
-        message:
-          type: string
-          description: Human-readable description.
   securitySchemes:
     BearerAuth:
       type: http

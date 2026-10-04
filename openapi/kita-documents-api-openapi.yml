@@ -155,15 +155,32 @@ components:
       description: Application UUID or human `app_id` (e.g. `APP-1234`).
       schema:
         type: string
+  responses:
+    Forbidden:
+      description: Valid key lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed body, missing fields, or bad parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, malformed, unknown, or revoked API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found in this organization.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable description of the error.
-      required:
-      - message
     Document:
       type: object
       properties:
@@ -195,31 +212,14 @@ components:
       - verified
       - low_confidence
       - missing
-  responses:
-    Unauthorized:
-      description: Missing, malformed, unknown, or revoked API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed body, missing fields, or bad parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Valid key lacks the required scope.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found in this organization.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+      required:
+      - message
   securitySchemes:
     ApiKeyAuth:
       type: http

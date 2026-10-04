@@ -111,7 +111,23 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Short error label.
+        message:
+          type: string
+          description: Human-readable description.
   responses:
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Rate limited. Wait and retry; check the `Retry-After` header.
       headers:
@@ -132,22 +148,6 @@ components:
           example:
             error: Bad Request
             message: documents array is required and must not be empty
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Short error label.
-        message:
-          type: string
-          description: Human-readable description.
   securitySchemes:
     BearerAuth:
       type: http

@@ -108,19 +108,9 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Short error label.
-        message:
-          type: string
-          description: Human-readable description.
   responses:
-    Unauthorized:
-      description: Invalid or missing API key.
+    Forbidden:
+      description: Upgrade required, or the document type is not enabled for this organization.
       content:
         application/json:
           schema:
@@ -134,8 +124,8 @@ components:
           example:
             error: Bad Request
             message: documents array is required and must not be empty
-    Forbidden:
-      description: Upgrade required, or the document type is not enabled for this organization.
+    Unauthorized:
+      description: Invalid or missing API key.
       content:
         application/json:
           schema:
@@ -146,6 +136,16 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Short error label.
+        message:
+          type: string
+          description: Human-readable description.
   securitySchemes:
     BearerAuth:
       type: http

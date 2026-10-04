@@ -135,14 +135,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: Document or batch ID does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
+    Forbidden:
+      description: Upgrade required, or the document type is not enabled for this organization.
       content:
         application/json:
           schema:
@@ -156,12 +150,6 @@ components:
           example:
             error: Bad Request
             message: documents array is required and must not be empty
-    Forbidden:
-      description: Upgrade required, or the document type is not enabled for this organization.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Rate limited. Wait and retry; check the `Retry-After` header.
       headers:
@@ -173,16 +161,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Document or batch ID does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Short error label.
-        message:
-          type: string
-          description: Human-readable description.
+    JobStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - completed
+      - failed
     Batch:
       type: object
       properties:
@@ -211,6 +209,15 @@ components:
                 type: string
               status:
                 $ref: '#/components/schemas/JobStatus'
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Short error label.
+        message:
+          type: string
+          description: Human-readable description.
     DocumentType:
       type: string
       description: 'Document type slug. Case-insensitive. Three types run the legacy stage-config pipeline
@@ -264,13 +271,6 @@ components:
       - insurance_policy
       - loan_agreement
       - income_tax_return
-    JobStatus:
-      type: string
-      enum:
-      - pending
-      - processing
-      - completed
-      - failed
   parameters:
     BatchId:
       name: batchId

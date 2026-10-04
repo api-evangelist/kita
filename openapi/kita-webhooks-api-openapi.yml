@@ -259,6 +259,35 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    BadRequest:
+      description: Bad request — check the request body and parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Bad Request
+            message: documents array is required and must not be empty
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Document or batch ID does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    WebhookId:
+      name: webhookId
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
     Error:
       type: object
@@ -269,18 +298,6 @@ components:
         message:
           type: string
           description: Human-readable description.
-    WebhookCreate:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-        events:
-          type: array
-          items:
-            type: string
-        active:
-          type: boolean
     Webhook:
       type: object
       properties:
@@ -295,35 +312,18 @@ components:
             type: string
         active:
           type: boolean
-  responses:
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — check the request body and parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Bad Request
-            message: documents array is required and must not be empty
-    NotFound:
-      description: Document or batch ID does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    WebhookId:
-      name: webhookId
-      in: path
-      required: true
-      schema:
-        type: string
+    WebhookCreate:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        events:
+          type: array
+          items:
+            type: string
+        active:
+          type: boolean
   securitySchemes:
     BearerAuth:
       type: http

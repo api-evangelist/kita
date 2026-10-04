@@ -247,14 +247,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable description of the error.
-      required:
-      - message
     Pagination:
       type: object
       properties:
@@ -264,6 +256,24 @@ components:
           type: integer
         offset:
           type: integer
+    ApplicationUpdate:
+      type: object
+      properties:
+        business_name:
+          type: string
+        loan_type:
+          type: string
+        loan_amount:
+          type: number
+        application_context:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+    ApplicationEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Application'
     ApplicationStatus:
       type: string
       enum:
@@ -293,6 +303,14 @@ components:
         idempotent:
           type: boolean
           description: Present and true on an idempotent intake replay.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+      required:
+      - message
     ApplicationCreate:
       type: object
       required:
@@ -326,39 +344,7 @@ components:
           type: boolean
           default: false
           description: Email the borrower for missing documents.
-    ApplicationUpdate:
-      type: object
-      properties:
-        business_name:
-          type: string
-        loan_type:
-          type: string
-        loan_amount:
-          type: number
-        application_context:
-          type: string
-        status:
-          $ref: '#/components/schemas/ApplicationStatus'
-    ApplicationEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Application'
-  parameters:
-    ApplicationId:
-      name: id
-      in: path
-      required: true
-      description: Application UUID or human `app_id` (e.g. `APP-1234`).
-      schema:
-        type: string
   responses:
-    Unauthorized:
-      description: Missing, malformed, unknown, or revoked API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Malformed body, missing fields, or bad parameters.
       content:
@@ -377,6 +363,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, malformed, unknown, or revoked API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    ApplicationId:
+      name: id
+      in: path
+      required: true
+      description: Application UUID or human `app_id` (e.g. `APP-1234`).
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: http

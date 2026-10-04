@@ -113,7 +113,62 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  responses:
+    Forbidden:
+      description: Upgrade required, or the document type is not enabled for this organization.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — check the request body and parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Bad Request
+            message: documents array is required and must not be empty
+    ServerError:
+      description: Server error — retry after a brief delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate limited. Wait and retry; check the `Retry-After` header.
+      headers:
+        Retry-After:
+          description: Seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    JobStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - completed
+      - failed
+    ProcessAccepted:
+      type: object
+      properties:
+        documentId:
+          type: integer
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        message:
+          type: string
     Error:
       type: object
       properties:
@@ -176,61 +231,6 @@ components:
       - insurance_policy
       - loan_agreement
       - income_tax_return
-    ProcessAccepted:
-      type: object
-      properties:
-        documentId:
-          type: integer
-        status:
-          $ref: '#/components/schemas/JobStatus'
-        message:
-          type: string
-    JobStatus:
-      type: string
-      enum:
-      - pending
-      - processing
-      - completed
-      - failed
-  responses:
-    ServerError:
-      description: Server error — retry after a brief delay.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — check the request body and parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Bad Request
-            message: documents array is required and must not be empty
-    Forbidden:
-      description: Upgrade required, or the document type is not enabled for this organization.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Rate limited. Wait and retry; check the `Retry-After` header.
-      headers:
-        Retry-After:
-          description: Seconds to wait before retrying.
-          schema:
-            type: integer
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     BearerAuth:
       type: http
