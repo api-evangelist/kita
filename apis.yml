@@ -316,6 +316,9 @@ apis:
   - type: APIReference
     url: https://github.com/Kita-Technologies/kita-api-examples/blob/main/API.md
 common:
+- type: CapabilityMap
+  url: capabilities/kita-capability-edges.yml
+  name: Kita Business Capability Map
 - type: Overlay
   url: overlays/kita-capture-overlay.yaml
 - type: PostmanWorkspace
