@@ -45,3 +45,28 @@ free_tier:
   detail: The Standard plan is free and includes the first 100 credits.
 notes: 'Only the free Standard tier carries a published price; Growth and Enterprise are
   quoted. Batch processing requires a paid plan, and maximum file size is determined by plan.'
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  units: []
+  plans:
+  - name: Standard
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Growth
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
