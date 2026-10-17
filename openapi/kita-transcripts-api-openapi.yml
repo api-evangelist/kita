@@ -101,30 +101,15 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    DocumentId:
-      name: docId
-      in: path
-      required: true
-      description: Document identifier.
-      schema:
-        type: string
-    ApplicationId:
-      name: id
-      in: path
-      required: true
-      description: Application UUID or human `app_id` (e.g. `APP-1234`).
-      schema:
-        type: string
   responses:
-    Unauthorized:
-      description: Missing, malformed, unknown, or revoked API key.
+    NotFound:
+      description: Resource not found in this organization.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found in this organization.
+    Unauthorized:
+      description: Missing, malformed, unknown, or revoked API key.
       content:
         application/json:
           schema:
@@ -138,6 +123,21 @@ components:
           description: Human-readable description of the error.
       required:
       - message
+  parameters:
+    ApplicationId:
+      name: id
+      in: path
+      required: true
+      description: Application UUID or human `app_id` (e.g. `APP-1234`).
+      schema:
+        type: string
+    DocumentId:
+      name: docId
+      in: path
+      required: true
+      description: Document identifier.
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: http

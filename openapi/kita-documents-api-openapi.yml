@@ -140,36 +140,9 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    DocumentId:
-      name: docId
-      in: path
-      required: true
-      description: Document identifier.
-      schema:
-        type: string
-    ApplicationId:
-      name: id
-      in: path
-      required: true
-      description: Application UUID or human `app_id` (e.g. `APP-1234`).
-      schema:
-        type: string
   responses:
     Forbidden:
       description: Valid key lacks the required scope.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed body, missing fields, or bad parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, malformed, unknown, or revoked API key.
       content:
         application/json:
           schema:
@@ -180,7 +153,35 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, malformed, unknown, or revoked API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed body, missing fields, or bad parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    DocumentStatus:
+      type: string
+      enum:
+      - awaiting
+      - processing
+      - verified
+      - low_confidence
+      - missing
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+      required:
+      - message
     Document:
       type: object
       properties:
@@ -204,22 +205,21 @@ components:
           type: array
           items:
             type: object
-    DocumentStatus:
-      type: string
-      enum:
-      - awaiting
-      - processing
-      - verified
-      - low_confidence
-      - missing
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable description of the error.
-      required:
-      - message
+  parameters:
+    ApplicationId:
+      name: id
+      in: path
+      required: true
+      description: Application UUID or human `app_id` (e.g. `APP-1234`).
+      schema:
+        type: string
+    DocumentId:
+      name: docId
+      in: path
+      required: true
+      description: Document identifier.
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: http

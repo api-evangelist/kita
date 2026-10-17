@@ -106,27 +106,49 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, malformed, unknown, or revoked API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: Resource not found in this organization.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    ApplicationId:
-      name: id
-      in: path
-      required: true
-      description: Application UUID or human `app_id` (e.g. `APP-1234`).
-      schema:
-        type: string
+    Unauthorized:
+      description: Missing, malformed, unknown, or revoked API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Memo:
+      type: object
+      properties:
+        last_synthesis_at:
+          type: string
+          format: date-time
+        sections:
+          type: array
+          items:
+            type: object
+            properties:
+              section_number:
+                type: integer
+              title:
+                type: string
+              body:
+                type: string
+              locked_by_lo:
+                type: boolean
+              updated_at:
+                type: string
+                format: date-time
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+      required:
+      - message
     MemoStatus:
       type: object
       properties:
@@ -150,36 +172,14 @@ components:
         last_synthesis_at:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable description of the error.
-      required:
-      - message
-    Memo:
-      type: object
-      properties:
-        last_synthesis_at:
-          type: string
-          format: date-time
-        sections:
-          type: array
-          items:
-            type: object
-            properties:
-              section_number:
-                type: integer
-              title:
-                type: string
-              body:
-                type: string
-              locked_by_lo:
-                type: boolean
-              updated_at:
-                type: string
-                format: date-time
+  parameters:
+    ApplicationId:
+      name: id
+      in: path
+      required: true
+      description: Application UUID or human `app_id` (e.g. `APP-1234`).
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: http

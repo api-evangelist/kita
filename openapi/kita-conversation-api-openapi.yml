@@ -63,14 +63,6 @@ components:
           description: Human-readable description of the error.
       required:
       - message
-  parameters:
-    ApplicationId:
-      name: id
-      in: path
-      required: true
-      description: Application UUID or human `app_id` (e.g. `APP-1234`).
-      schema:
-        type: string
   responses:
     Unauthorized:
       description: Missing, malformed, unknown, or revoked API key.
@@ -84,6 +76,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    ApplicationId:
+      name: id
+      in: path
+      required: true
+      description: Application UUID or human `app_id` (e.g. `APP-1234`).
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: http

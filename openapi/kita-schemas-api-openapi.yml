@@ -115,6 +115,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Document or batch ID does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request — check the request body and parameters.
       content:
@@ -126,12 +132,6 @@ components:
             message: documents array is required and must not be empty
     Unauthorized:
       description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Document or batch ID does not exist.
       content:
         application/json:
           schema:

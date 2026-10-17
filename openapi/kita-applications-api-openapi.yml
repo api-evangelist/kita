@@ -246,44 +246,45 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Forbidden:
+      description: Valid key lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, malformed, unknown, or revoked API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found in this organization.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed body, missing fields, or bad parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Pagination:
-      type: object
-      properties:
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-    ApplicationUpdate:
-      type: object
-      properties:
-        business_name:
-          type: string
-        loan_type:
-          type: string
-        loan_amount:
-          type: number
-        application_context:
-          type: string
-        status:
-          $ref: '#/components/schemas/ApplicationStatus'
     ApplicationEnvelope:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/Application'
-    ApplicationStatus:
-      type: string
-      enum:
-      - submitted
-      - awaiting_docs
-      - underwriting
-      - question_raised
-      - memo_drafted
-      - approved
-      - declined
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+      required:
+      - message
     Application:
       type: object
       properties:
@@ -303,14 +304,29 @@ components:
         idempotent:
           type: boolean
           description: Present and true on an idempotent intake replay.
-    Error:
+    ApplicationUpdate:
       type: object
       properties:
-        message:
+        business_name:
           type: string
-          description: Human-readable description of the error.
-      required:
-      - message
+        loan_type:
+          type: string
+        loan_amount:
+          type: number
+        application_context:
+          type: string
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+    ApplicationStatus:
+      type: string
+      enum:
+      - submitted
+      - awaiting_docs
+      - underwriting
+      - question_raised
+      - memo_drafted
+      - approved
+      - declined
     ApplicationCreate:
       type: object
       required:
@@ -344,31 +360,15 @@ components:
           type: boolean
           default: false
           description: Email the borrower for missing documents.
-  responses:
-    BadRequest:
-      description: Malformed body, missing fields, or bad parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Valid key lacks the required scope.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found in this organization.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, malformed, unknown, or revoked API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
   parameters:
     ApplicationId:
       name: id

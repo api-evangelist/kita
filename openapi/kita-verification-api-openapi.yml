@@ -122,12 +122,6 @@ components:
           type: string
           description: Human-readable description.
   responses:
-    Unauthorized:
-      description: Invalid or missing API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Rate limited. Wait and retry; check the `Retry-After` header.
       headers:
@@ -135,6 +129,12 @@ components:
           description: Seconds to wait before retrying.
           schema:
             type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or missing API key.
       content:
         application/json:
           schema:

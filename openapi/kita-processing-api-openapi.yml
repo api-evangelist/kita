@@ -120,21 +120,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request — check the request body and parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: Bad Request
-            message: documents array is required and must not be empty
-    ServerError:
-      description: Server error — retry after a brief delay.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Rate limited. Wait and retry; check the `Retry-After` header.
       headers:
@@ -146,6 +131,21 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Server error — retry after a brief delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request — check the request body and parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: Bad Request
+            message: documents array is required and must not be empty
     Unauthorized:
       description: Invalid or missing API key.
       content:
@@ -153,22 +153,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    JobStatus:
-      type: string
-      enum:
-      - pending
-      - processing
-      - completed
-      - failed
-    ProcessAccepted:
-      type: object
-      properties:
-        documentId:
-          type: integer
-        status:
-          $ref: '#/components/schemas/JobStatus'
-        message:
-          type: string
     Error:
       type: object
       properties:
@@ -178,6 +162,22 @@ components:
         message:
           type: string
           description: Human-readable description.
+    ProcessAccepted:
+      type: object
+      properties:
+        documentId:
+          type: integer
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        message:
+          type: string
+    JobStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - completed
+      - failed
     DocumentType:
       type: string
       description: 'Document type slug. Case-insensitive. Three types run the legacy stage-config pipeline

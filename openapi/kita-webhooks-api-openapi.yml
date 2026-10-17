@@ -260,6 +260,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   responses:
+    NotFound:
+      description: Document or batch ID does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request — check the request body and parameters.
       content:
@@ -275,12 +281,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Document or batch ID does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     WebhookId:
       name: webhookId
@@ -289,15 +289,6 @@ components:
       schema:
         type: string
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Short error label.
-        message:
-          type: string
-          description: Human-readable description.
     Webhook:
       type: object
       properties:
@@ -312,6 +303,15 @@ components:
             type: string
         active:
           type: boolean
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Short error label.
+        message:
+          type: string
+          description: Human-readable description.
     WebhookCreate:
       type: object
       properties:

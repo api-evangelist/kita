@@ -237,13 +237,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    DocumentIdPath:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: integer
   schemas:
     FraudDetection:
       type: object
@@ -266,13 +259,6 @@ components:
                 type: string
               message:
                 type: string
-    JobStatus:
-      type: string
-      enum:
-      - pending
-      - processing
-      - completed
-      - failed
     DocumentResult:
       type: object
       description: Shared envelope for every document type.
@@ -307,6 +293,13 @@ components:
         message:
           type: string
           description: Human-readable description.
+    JobStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - completed
+      - failed
     DocumentType:
       type: string
       description: 'Document type slug. Case-insensitive. Three types run the legacy stage-config pipeline
@@ -361,6 +354,12 @@ components:
       - loan_agreement
       - income_tax_return
   responses:
+    NotFound:
+      description: Document or batch ID does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Rate limited. Wait and retry; check the `Retry-After` header.
       headers:
@@ -378,12 +377,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Document or batch ID does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    DocumentIdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
   securitySchemes:
     BearerAuth:
       type: http
