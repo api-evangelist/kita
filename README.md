@@ -64,65 +64,180 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kita is an AI-native loan origination and underwriting company (Y Combinator W26, San
-Francisco) building document intelligence and credit decisioning for lenders in emerging and
-undertapped markets — the Philippines, Indonesia, Mexico and the United States.
+Kita is an AI-native loan origination and underwriting company (Y Combinator W26, San Francisco) building document intelligence and credit decisioning for lenders in emerging and undertapped markets. Kita ships two developer-facing APIs. Kita Capture is a document-intelligence API that turns scanned or photographed bank statements, payslips, government IDs, credit reports, tax filings and 30+ other document types into structured, validated, fraud-checked JSON, with cross-document verification, batch processing, custom extraction schemas and HMAC-signed webhooks. Kita Underwriter is a credit-file API that creates loan applications, ingests borrower documents, computes a deterministic credit picture (adjusted EBITDA, DSCR, margins, debt-to-worth, sensitivity and a policy-engine decision produced by a versioned calculation engine rather than an LLM) and synthesizes a cited credit memo. The platform is region-pinned across Singapore and Mexico deployments and is used by microfinance institutions, SME lenders, CDFIs and community banks across Southeast Asia, Latin America and the United States.
 
-Kita ships two developer-facing APIs:
+**Areas:** Company · Fintech · Lending · Underwriting · Credit Scoring · Document Intelligence · Document Extraction · Fraud Prevention · Artificial Intelligence · Computer Vision · Emerging Markets · Loan Origination
 
-- **Kita Capture** — document intelligence. Turns scanned or photographed bank statements,
-  payslips, government IDs, credit reports, tax filings and 30+ other document types into
-  structured, validated, fraud-checked JSON. Cross-document verification, batch processing,
-  custom extraction schemas, per-document cost reporting and HMAC-signed webhooks.
-  Base URL `https://portal.usekita.com`.
-- **Kita AI Underwriter** — the credit file. Creates loan applications, ingests borrower
-  documents, computes a deterministic credit picture (adjusted EBITDA, DSCR, margins,
-  debt-to-worth, sensitivity, policy decision — from a versioned calculation engine, not an
-  LLM) and synthesizes a cited credit memo with PDF and XLSX exports.
-  Base URL `https://underwriter.kita.ai/api/v1`.
+## Kita on APIs.io
 
-Backed by: y-combinator
+Everything profiled for Kita is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kita/](https://apis.io/providers/kita/)** — or go straight to one of the APIs or properties below.
 
-## Links
+### APIs (14)
 
-- Website — https://www.kita.ai/
-- Documentation — https://www.kita.ai/documentation
-- Pricing — https://www.kita.ai/pricing
-- Security — https://www.kita.ai/security
-- Guided demo — https://demo.kita.ai/
-- Dashboard / sign-up — https://portal.usekita.com/
-- GitHub — https://github.com/Kita-Technologies
-- Python SDK — https://pypi.org/project/kita/
-- MCP server — https://www.npmjs.com/package/kita-docs-mcp
+- [Kita Applications API](https://apis.io/apis/kita/kita-applications-api/) — Loan application records.
+- [Kita Batch API](https://apis.io/apis/kita/kita-batch-api/) — Process up to 100 documents from URLs in one request.
+- [Kita Conversation API](https://apis.io/apis/kita/kita-conversation-api/) — Borrower message thread.
+- [Kita Credit API](https://apis.io/apis/kita/kita-credit-api/) — Deterministic credit picture — spread, adjustments, policy decision.
+- [Kita Documents API](https://apis.io/apis/kita/kita-documents-api/) — Borrower document upload and extraction.
+- [Kita Exports API](https://apis.io/apis/kita/kita-exports-api/) — PDF and XLSX exports.
+- [Kita Folders API](https://apis.io/apis/kita/kita-folders-api/) — Group documents into containers.
+- [Kita Memo API](https://apis.io/apis/kita/kita-memo-api/) — Cited credit memo synthesis and retrieval.
+- [Kita Processing API](https://apis.io/apis/kita/kita-processing-api/) — Submit documents for extraction.
+- [Kita Results API](https://apis.io/apis/kita/kita-results-api/) — Retrieve extraction results, summaries and exports.
+- [Kita Schemas API](https://apis.io/apis/kita/kita-schemas-api/) — Custom extraction schemas.
+- [Kita Transcripts API](https://apis.io/apis/kita/kita-transcripts-api/) — Plain-text document transcripts.
+- [Kita Verification API](https://apis.io/apis/kita/kita-verification-api/) — Cross-document verification checks.
+- [Kita Webhooks API](https://apis.io/apis/kita/kita-webhooks-api/) — Register and manage HMAC-signed outbound webhooks.
 
-## Artifacts in this repository
+### Published properties
 
-| Directory | What it holds |
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Kita Capture Webhooks](https://apis.io/asyncapis/kita/kita-capture-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [kita-docs](https://apis.io/servers/kita/kita-docs/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Kita Agentic Access](https://apis.io/agentic-access/kita/kita-agentic-access/)
+
+#### Collections (28)
+
+Postman and Open Collection request collections.
+
+- [Kita Capture Applications API](https://apis.io/collections/kita/open-kita-applications-api/)
+- [Kita Capture Applications Batch API](https://apis.io/collections/kita/open-kita-batch-api/)
+- [Kita Capture Applications Conversation API](https://apis.io/collections/kita/open-kita-conversation-api/)
+- [Kita Capture Applications Credit API](https://apis.io/collections/kita/open-kita-credit-api/)
+- [Kita Capture Applications Documents API](https://apis.io/collections/kita/open-kita-documents-api/)
+- [Kita Capture Applications Exports API](https://apis.io/collections/kita/open-kita-exports-api/)
+- [Kita Capture Applications Folders API](https://apis.io/collections/kita/open-kita-folders-api/)
+- [Kita Capture Applications Memo API](https://apis.io/collections/kita/open-kita-memo-api/)
+- [Kita Capture Applications Processing API](https://apis.io/collections/kita/open-kita-processing-api/)
+- [Kita Capture Applications Results API](https://apis.io/collections/kita/open-kita-results-api/)
+- [Kita Capture Applications Schemas API](https://apis.io/collections/kita/open-kita-schemas-api/)
+- [Kita Capture Applications Transcripts API](https://apis.io/collections/kita/open-kita-transcripts-api/)
+- [Kita Capture Applications Verification API](https://apis.io/collections/kita/open-kita-verification-api/)
+- [Kita Capture Applications Webhooks API](https://apis.io/collections/kita/open-kita-webhooks-api/)
+- [Kita Capture Applications API](https://apis.io/collections/kita/postman-kita-applications-api/)
+- [Kita Capture Applications Batch API](https://apis.io/collections/kita/postman-kita-batch-api/)
+- [Kita Capture Applications Conversation API](https://apis.io/collections/kita/postman-kita-conversation-api/)
+- [Kita Capture Applications Credit API](https://apis.io/collections/kita/postman-kita-credit-api/)
+- [Kita Capture Applications Documents API](https://apis.io/collections/kita/postman-kita-documents-api/)
+- [Kita Capture Applications Exports API](https://apis.io/collections/kita/postman-kita-exports-api/)
+- [Kita Capture Applications Folders API](https://apis.io/collections/kita/postman-kita-folders-api/)
+- [Kita Capture Applications Memo API](https://apis.io/collections/kita/postman-kita-memo-api/)
+- [Kita Capture Applications Processing API](https://apis.io/collections/kita/postman-kita-processing-api/)
+- [Kita Capture Applications Results API](https://apis.io/collections/kita/postman-kita-results-api/)
+- [Kita Capture Applications Schemas API](https://apis.io/collections/kita/postman-kita-schemas-api/)
+- …and 3 more published on APIs.io
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Kita Capture Overlay](https://apis.io/overlays/kita/kita-capture-overlay/)
+- [Kita Underwriter Overlay](https://apis.io/overlays/kita/kita-underwriter-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Kita Authentication](https://apis.io/security/kita/kita-authentication/)
+- [Kita Domain Security](https://apis.io/security/kita/kita-domain-security/)
+- [Kita Trust Center](https://apis.io/security/kita/kita-trust-center/)
+- [Kita Vulnerability Disclosure](https://apis.io/security/kita/kita-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Kita Plans](https://apis.io/plans/kita/kita-plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Kita Rate Limits](https://apis.io/rate-limits/kita/kita-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.kita.ai/)
+- [Documentation](https://www.kita.ai/documentation)
+- [Getting started](https://www.kita.ai/documentation)
+- [API reference](https://www.kita.ai/documentation)
+- [Pricing](https://www.kita.ai/pricing)
+- [Sign up](https://portal.usekita.com/)
+- [Blog](https://www.kita.ai/blog)
+- [Security](https://www.kita.ai/security)
+- [Compliance](https://www.kita.ai/security)
+- [Terms of service](https://www.kita.ai/terms)
+- [Privacy policy](https://www.kita.ai/privacy)
+- [GitHub](https://github.com/Kita-Technologies)
+
+## API Evangelist rating
+
+**Kin Score 60.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
 |---|---|
-| `openapi/` | OpenAPI 3.1 for both APIs, generated from Kita's published documentation |
-| `overlays/` | API Evangelist enhancement overlays for each spec |
-| `authentication/` | API key model, prefixes, key scopes, rotation |
-| `conventions/` | Idempotency, pagination, envelopes, async model, versioning |
-| `errors/` | Error catalog and envelopes for both APIs |
-| `rate-limits/` | Rate-limit signalling and published constraints |
-| `plans/` | Pricing tiers and the credit model |
-| `asyncapi/` | Webhook catalog (Kita publishes no AsyncAPI) |
-| `data-model/` | Entity-relationship graph across both domains |
-| `lifecycle/` | Versioning, deprecation, regions, maturity |
-| `conformance/` | Standards conformance assertions |
-| `sandbox/` | Hosted demo, free tier, and the absence of a test mode |
-| `mcp/` | The official `kita-docs-mcp` server, its tools and resources |
-| `packages/` | First-party packages on PyPI and npm |
-| `examples/` | Official example programs and worked responses |
-| `skills/` | Agent Skills for the three marquee flows |
-| `llms/` | Generated `llms.txt` |
-| `well-known/` | `/.well-known/` probe results (none published) |
-| `security/` | Domain security probe, vulnerability disclosure, trust posture |
-| `agentic-access/` | Recommended `x-agentic-access` contracts per operation |
+| Discoverability | 71.7 |
+| Contract quality | 63.3 |
+| Contract governance | 4.5 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 74.4 |
+| Access clarity | 92.1 |
 
-Kita publishes no machine-readable OpenAPI description. The specifications in `openapi/` were
-generated by the API Evangelist enrichment pipeline from Kita's own published documentation —
-https://www.kita.ai/documentation, the `API.md` in
-[Kita-Technologies/kita-api-examples](https://github.com/Kita-Technologies/kita-api-examples),
-and the docs bundle shipped verbatim inside the official `kita-docs-mcp` npm package. Only
-operations, fields and status codes that Kita documents are represented.
+**Agent readiness 39.5** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | verified |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 29.5** — Insurance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kita/](https://apis.io/providers/kita/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Kita: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kita/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
